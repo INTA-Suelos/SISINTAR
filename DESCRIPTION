@@ -1,0 +1,25 @@
+Package: SISINTAR
+Title: Lee y Manipula Datos de Suelo de SISINTA
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Yanina",
+           family = "Bellini Saibene",
+           role = c("cre", "ctb"),
+           email = "yabellini@gmail.com"),
+      person(given = "Elio",
+           family = "Campitelli",
+           role = c("aut"),
+           email = "elio.campitelli@cima.fcen.uba.ar",
+           comment = c(ORCID = "0000-0002-7742-9230")),
+      person(given = "Paola",
+           family = "Corrales",
+           role = c("aut"),
+           email = "paola.corrales@cima.fcen.uba.ar")
+Description: Permite descargar y manipular datos de perfiles de uselo disponibles 
+  en la plataforma SISINTA. 
+License: GPL-3
+Encoding: UTF-8
+Language: es
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
