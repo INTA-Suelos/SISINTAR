@@ -14,10 +14,10 @@ Authors@R:
       person(given = "Paola",
            family = "Corrales",
            role = c("aut"),
-           email = "paola.corrales@cima.fcen.uba.ar")
-Description: Permite descargar y manipular datos de perfiles de uselo disponibles 
+           email = "paola.corrales@cima.fcen.uba.ar"))
+Description: Permite descargar y manipular datos de perfiles de suelo disponibles 
   en la plataforma SISINTA. 
-License: GPL-3
+License: GPL (>= 3)
 Encoding: UTF-8
 Language: es
 LazyData: true
