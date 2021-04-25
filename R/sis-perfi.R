@@ -26,6 +26,13 @@ sis_perfiles <- function(perfil_ids, dir = tempdir()) {
   })
   data <- do.call(rbind, data)
 
+
+  return(data)
+}
+
+#' @export
+as_SoilProfileCollection <- function(data) {
+
   perfil_cols <- colnames(data)[startsWith(colnames(data), "perfil_")]
   perfil_cols <- setdiff(perfil_cols, "perfil_id")
 
@@ -34,5 +41,5 @@ sis_perfiles <- function(perfil_ids, dir = tempdir()) {
   aqp::depths(data) <- perfil_id ~ profundidad_superior + profundidad_inferior
   aqp::site(data) <- formula
 
-  return(data)
+  data
 }
