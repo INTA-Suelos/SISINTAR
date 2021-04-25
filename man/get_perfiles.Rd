@@ -7,7 +7,9 @@
 get_perfiles(perfil_ids, dir = tempdir(), refresh = FALSE)
 }
 \arguments{
-\item{perfil_ids}{vector numérico de ids de perfiles de suelo.}
+\item{perfil_ids}{vector numérico de ids de perfiles de suelo.
+Alternativamente puede ser un data.frame con una columna llamada
+\code{perfil_id} (la salida de \code{\link[=buscar_perfiles]{buscar_perfiles()}})}
 
 \item{dir}{directorio donde se guardan los datos de perfiles o
 donde se leen perfiles ya descargados. Por defecto, los perfiles

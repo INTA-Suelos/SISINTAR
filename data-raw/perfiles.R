@@ -6,7 +6,8 @@ perfiles <- geojsonio::geojson_read(file)
 
 perfiles <- lapply(perfiles$features, function(x) {
   as.data.frame(
-    c(x$properties[c("id", "numero", "fecha", "clase")],
+    c(list(perfil_id = x$properties[["id"]]),
+      x$properties[c("numero", "fecha", "clase")],
       list(lon = x$geometry$coordinates[[1]],
            lat = x$geometry$coordinates[[2]]))
   )
