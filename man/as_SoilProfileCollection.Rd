@@ -8,14 +8,14 @@ as_SoilProfileCollection(perfiles)
 }
 \arguments{
 \item{perfiles}{data.frame con perfiles descargados o leidos con
-la función \code{get_perfiles}.}
+la función \code{\link[=get_perfiles]{get_perfiles()}}.}
 }
 \value{
-un objeto \code{\link\link{packagename}
+un objeto \link[aqp:SoilProfileCollection-class]{aqp::SoilProfileCollection}
 }
 \description{
 Transforma un perfil de SISINTA en formato data.frame en un objeto
-SoilProfileCollection del paquete \code{\link[aqp]}.
+SoilProfileCollection del paquete \code{aqp}.
 }
 \examples{
 

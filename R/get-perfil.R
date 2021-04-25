@@ -25,10 +25,10 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE) {
 
   data <- lapply(seq_along(urls), function(i) {
     if (!file.exists(files[i]) | refresh == TRUE) {
-      download.file(urls[i], files[i])
+      utils::download.file(urls[i], files[i])
     }
 
-    data <- read.csv(files[i])
+    data <- utils::read.csv(files[i])
     data
   })
   data <- do.call(rbind, data)
