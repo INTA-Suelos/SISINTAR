@@ -4,7 +4,12 @@
 \alias{get_perfiles}
 \title{Obtiene perfiles de suelo}
 \usage{
-get_perfiles(perfil_ids, dir = tempdir(), refresh = FALSE)
+get_perfiles(
+  perfil_ids,
+  dir = tempdir(),
+  refresh = FALSE,
+  parar_en_error = FALSE
+)
 }
 \arguments{
 \item{perfil_ids}{vector numérico de ids de perfiles de suelo.
@@ -17,6 +22,9 @@ descargados se guardan en una carpeta temporal.}
 
 \item{refresh}{boleano, fuerza la descarga de los datos para
 actualizar los perfiles ya descargados.}
+
+\item{parar_en_error}{tirar un error si algún perfil no está disponible
+seguir intentando con los siguientes.}
 }
 \value{
 Un data.frame.
