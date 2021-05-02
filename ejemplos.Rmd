@@ -1,0 +1,123 @@
+---
+title: "Ejemplo de uso"
+author: "Elio Campitelli"
+date: "02/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(SISINTAR)
+library(dplyr)
+```
+
+
+# Buscar datos disponibles
+
+La función `buscar_perfiles()` permite buscar perfiles en función de la localizacioy, la fecha y la clase. La primera vez que se corre, descarga el archivo http://sisinta.inta.gob.ar/es/perfiles.geojson. 
+
+Si se corre sin argumentos, devuelve todos los perfiles disponibles. 
+
+
+```{r}
+buscar_perfiles() %>% 
+  head(10)
+```
+
+Técnicamente, también lista algunos perfiles que no están dispnibles públicamente:
+
+```{r}
+buscar_perfiles() %>%
+  filter(clase == "No disponible") %>% 
+  head(10)
+```
+
+La búsqueda por clase devuelve todos los perfiles que contienen alguno de los términos a buscar. Por ejemplo, la siguiente búsqueda devuelve los perfiles que contengan "hapludol" o "natralbol".
+
+```{r}
+buscar_perfiles(clase = c("hapludol", "natralbol")) %>% 
+  head(10)
+```
+
+
+También se puede buscar en fechas. La siguiente búsqueda devuelve los perfiles realizados durante 2019.
+
+```{r}
+buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31")) %>% 
+  head(10)
+```
+
+La combinación de criterios de búsqueda devuelve los perfiles que cumplen con ambos criterios. La siguiente búsqueda devuelve perfiles realizados en 2019 y que tienen "hapludol" o "natralbol".
+
+```{r}
+buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
+                clase = c("hapludol", "natralbol"))
+```
+
+
+
+# Descarga de datos
+
+
+Para descargar lo datos de los perfiles se usa la función `get_perfiles()`. Ésta toma un vector con los ids de los perfiles a descargar
+
+```{r}
+get_perfiles(c(6653, 6347, 6580)) %>% 
+  .[, 1:5] %>% 
+  head(10)
+```
+
+Alternativamente, puede tomar un data.frame que tenga una columna llamada "perfil_id". Esto es para que se pueda usar directamente la salida de `buscar_perfiles()` para descargar
+
+```{r}
+buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
+                clase = c("hapludol", "natralbol")) %>%
+  get_perfiles() %>% 
+  .[, 1:5] 
+```
+
+`get_perfiles()` por defecto descarga los datos en una carpeta temporal de modo que no descarga un perfil nuevamente si
+
+
+
+```{r}
+# Primera llamada, tarda porque descarga los datos
+system.time(get_perfiles(c(3238, 3182)))
+
+# Segunda llamada, levanta los datos de la carpeta temporal
+system.time(get_perfiles(c(3238, 3182)))
+```
+
+La carpeta de descarga se puede cambiar con el argumento `dir` de modo que se puede cambiar a una carpeta permanente de datos dentro de un proyecto. Para forzar la re-descarga de los datos, hay que setear el argumento `refresh = TRUE`
+
+
+
+Algunos perfiles no se pueden descargar públicamente. Cuando pasa esto, `get_perfiles()` devuelve un data.frame con los perfiles que sí se pudieron descargar y un warning describiendo qué problemas hubo.
+
+```{r}
+perfiles <- get_perfiles(c(3182, 4609))
+```
+
+Para elevar este warning a un errror, hay que setear el argumento `parar_en_error` a `TRUE`. En este caso, la función va a tirar error al primer perfil que no pueda descargar.
+
+```{r, error=TRUE}
+get_perfiles(c(3182, 4609), parar_en_error = TRUE)
+```
+
+Para convertir los perfiles a un SoilProfileCollection se usa `as_SoilProfileCollection()`.
+
+```{r}
+get_perfiles(c(3355, 3205)) %>%
+  as_SoilProfileCollection()
+```
+
+Por ejemplo, se pueden plotear los perfiles.
+
+```{r}
+library(aqp)
+get_perfiles(c(3355, 3205)) %>%
+  as_SoilProfileCollection() %>%
+  plot()
+```
+
