@@ -82,12 +82,16 @@ actualizar_perfiles <- function() {
 }
 
 file_perfiles <- function() {
-  dir <- tools::R_user_dir("SISINTAR", "data")
+  dir <- sisintar_datos()
 
   if (!dir.exists(dir)) {
     dir.create(dir, recursive = TRUE)
   }
 
   file.path(dir, "perfiles.Rds")
+}
 
+
+sisintar_datos <- function( ){
+  tools::R_user_dir("SISINTAR", "data")
 }
