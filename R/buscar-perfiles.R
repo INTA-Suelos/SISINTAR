@@ -30,6 +30,12 @@ buscar_perfiles <- function(rango_lon = NULL,
                             rango_fecha = NULL,
                             clase = NULL
                             ) {
+  perfiles <- file_perfiles()
+  if (!file.exists(perfiles)) {
+    actualizar_perfiles()
+  }
+  perfiles <- readRDS(perfiles)
+
   if (!is.null(rango_lon)) {
     keep <- perfiles$lon >= min(rango_lon) & perfiles$lon <= max(rango_lon)
     perfiles <- perfiles[keep, ]
@@ -53,26 +59,30 @@ buscar_perfiles <- function(rango_lon = NULL,
     perfiles <- perfiles[keep, ]
   }
 
-
-
   perfiles
 }
 
 
-
 actualizar_perfiles <- function() {
+  file <- file_perfiles()
+
+  if (file.exists(file)) {
+    return(file)
+  }
+  message("Descargando información de perfiles...")
   file <- tempfile(fileext = ".geojson")
-  utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file, quiet = TRUE)
+  utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file)
 
   f <- geojsonio::geojson_read(file)
 
   perfiles <- lapply(f$features, function(x) {
-
     as.data.frame(
-      c(x$properties[c("id", "numero", "fecha", "clase")],
+      c(list(perfil_id = x$properties[["id"]]),
+        x$properties[c("numero", "fecha", "clase")],
         list(lon = x$geometry$coordinates[[1]],
              lat = x$geometry$coordinates[[2]]))
     )
+
   })
   perfiles <- do.call(rbind, perfiles)
   perfiles$fecha <- as.Date(perfiles$fecha, "%d/%m/%Y")
@@ -92,6 +102,6 @@ file_perfiles <- function() {
 }
 
 
-sisintar_datos <- function( ){
+sisintar_datos <- function(){
   tools::R_user_dir("SISINTAR", "data")
 }
