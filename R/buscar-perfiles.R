@@ -62,7 +62,7 @@ buscar_perfiles <- function(rango_lon = NULL,
 
 actualizar_perfiles <- function() {
   file <- tempfile(fileext = ".geojson")
-  utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file)
+  utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file, quiet = TRUE)
 
   f <- geojsonio::geojson_read(file)
 

@@ -55,7 +55,7 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
 
       unlink(files[i])
       if (parar_en_error) {
-        stop("Error al descargar el perfil ", perfil_ids[i], " (#", i, "). Razón: ", message)
+        stop("Error al descargar el perfil ", perfil_ids[i], " (#", i, "). Raz\032n: ", message)
       }
       return(message)
     }
@@ -71,8 +71,8 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
     fails_ids <- perfil_ids[fails_n]
     messages <- unlist(data[fails])
 
-    fails_text <- paste0("  * ", fails_ids, " (#", fails_n, "). Razón: ", messages, collapse = "\n")
-    warning("Error al descargar los siguientes perfiles:\n", fails_text)
+    fails_text <- paste0("  * ", fails_ids, " (#", fails_n, "). Raz\032n: ", messages, collapse = "\n")
+    warning("No se pudieron descargar los siguientes perfiles:\n", fails_text)
   }
 
   data <- do.call(rbind, data[!fails])
