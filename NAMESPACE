@@ -3,3 +3,4 @@
 export(as_SoilProfileCollection)
 export(buscar_perfiles)
 export(get_perfiles)
+export(interpolar_perfiles)

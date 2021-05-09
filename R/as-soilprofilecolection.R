@@ -26,3 +26,9 @@ as_SoilProfileCollection <- function(perfiles) {
 
   perfiles
 }
+
+
+get_perfil_columns <- function(data) {
+  colnames(data)[startsWith(colnames(data), "perfil_")]
+
+}

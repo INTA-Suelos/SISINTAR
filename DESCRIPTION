@@ -29,4 +29,5 @@ Imports:
     progress,
     geojsonio,
     xml2,
-    urltools
+    urltools,
+    data.table
