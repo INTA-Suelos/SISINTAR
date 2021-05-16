@@ -1,5 +1,9 @@
 #' Exportar perfiles en shapefile
 #'
+#' La función exporta uno o más perfiles de SISINTA descargados o leidos
+#' con [get_perfiles()] en formato shapefile. !!! REQUIERE NOMBRES DE
+#' COLUMNAS MÁS CORTOS
+#'
 #' @param perfiles un data.frame con perfiles (salida de [get_perfiles()])
 #' @param archivo la ruta al archivo de salida.
 #'

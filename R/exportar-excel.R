@@ -1,6 +1,7 @@
 #' Exporta perfiles a excel
 #'
-#' Exporta un data.frame con datos de perfiles a un archivo excel donde los datos
+#' La función exporta uno o más perfiles de SISINTA descargados o leidos
+#' con [get_perfiles()] a un archivo excel donde los datos
 #' de sitio están en una hoja llamada "sitios" y los horizontes, en una hoja
 #' llamada "horizontes".
 #'

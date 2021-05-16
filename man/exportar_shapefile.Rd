@@ -12,7 +12,9 @@ exportar_shapefile(perfiles, archivo)
 \item{archivo}{la ruta al archivo de salida.}
 }
 \description{
-Exportar perfiles en shapefile
+La función exporta uno o más perfiles de SISINTA descargados o leidos
+con \code{\link[=get_perfiles]{get_perfiles()}} en formato shapefile. !!! REQUIERE NOMBRES DE
+COLUMNAS MÁS CORTOS
 }
 \examples{
 perfiles <- get_perfiles(c(3238, 4634))
