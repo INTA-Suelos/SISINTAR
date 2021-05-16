@@ -32,3 +32,4 @@ Imports:
     urltools,
     data.table,
     xlsx,
+    sf
