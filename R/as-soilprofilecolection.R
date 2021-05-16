@@ -1,6 +1,6 @@
 #' Objeto SoilProfileCollection
 #'
-#' Transforma un perfil de SISINTA en formato data.frame en un objeto
+#' Transforma uno másperfiles de SISINTA en formato data.frame en un objeto
 #' SoilProfileCollection del paquete `aqp`.
 #'
 #' @param perfiles data.frame con perfiles descargados o leidos con

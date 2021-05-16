@@ -14,7 +14,7 @@ la función \code{\link[=get_perfiles]{get_perfiles()}}.}
 un objeto \link[aqp:SoilProfileCollection-class]{aqp::SoilProfileCollection}
 }
 \description{
-Transforma un perfil de SISINTA en formato data.frame en un objeto
+Transforma uno másperfiles de SISINTA en formato data.frame en un objeto
 SoilProfileCollection del paquete \code{aqp}.
 }
 \examples{
