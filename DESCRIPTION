@@ -30,4 +30,4 @@ Imports:
     geojsonio,
     xml2,
     urltools,
-    data.table
+    data.table,
