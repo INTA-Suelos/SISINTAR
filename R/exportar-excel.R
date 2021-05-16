@@ -19,11 +19,14 @@
 exportar_excel <- function(perfiles, archivo) {
   perfiles_separado <- separar_perfiles(perfiles)
 
-  wb <- xlsx::createWorkbook()
-  xlsx::addDataFrame(perfiles_separado[["sitios"]], sheet = xlsx::createSheet(wb, "sitios"))
-  xlsx::addDataFrame(perfiles_separado[["horizontes"]], sheet = xlsx::createSheet(wb, "horizontes"))
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "sitios")
+  openxlsx::writeDataTable(wb, perfiles_separado[["sitios"]], sheet = "sitios")
 
-  xlsx::saveWorkbook(wb, archivo)
+  openxlsx::addWorksheet(wb, "horizontes")
+  openxlsx::writeDataTable(wb, perfiles_separado[["horizontes"]], sheet = "horizontes")
+
+  openxlsx::saveWorkbook(wb, archivo, TRUE)
   invisible(archivo)
 }
 

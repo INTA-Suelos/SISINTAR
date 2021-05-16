@@ -31,5 +31,5 @@ Imports:
     xml2,
     urltools,
     data.table,
-    xlsx,
-    sf
+    sf,
+    openxlsx
