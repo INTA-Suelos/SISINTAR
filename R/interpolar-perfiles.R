@@ -1,16 +1,22 @@
 #' Interpola perfiles
 #'
+#' La función genera perfiles normalizados a horizontes estandarizados
+#' calculando un promedio ponderado.
+#'
 #' @param perfiles un data.frame con datos de perfiles
 #' @param variables un vector de texto con los nombres de las variables
 #' a interpolar
 #' @param horizontes un vector numérico que determina los horizontes a
-#' usar para la interpolación o un numérico único que determina la resolución.
+#' usar para la interpolación o un numérico único que determina la resolución
+#' en centímetros.
 #'
 #' @returns
 #' Un data.frame con los datos interpolados.
 #'
 #' @examples
 #' interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"))
+#' # Horizontes cada 10 centímetros entre 0 y 100.
+#' interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"), seq(0, 100, 10)
 #'
 #' @export
 interpolar_perfiles <- function(perfiles, variables, horizontes = 30) {

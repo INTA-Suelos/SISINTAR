@@ -13,15 +13,19 @@ interpolar_perfiles(perfiles, variables, horizontes = 30)
 a interpolar}
 
 \item{horizontes}{un vector numérico que determina los horizontes a
-usar para la interpolación o un numérico único que determina la resolución.}
+usar para la interpolación o un numérico único que determina la resolución
+en centímetros.}
 }
 \value{
 Un data.frame con los datos interpolados.
 }
 \description{
-Interpola perfiles
+La función genera perfiles normalizados a horizontes estandarizados
+calculando un promedio ponderado.
 }
 \examples{
 interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"))
+# Horizontes cada 10 centímetros entre 0 y 100.
+interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"), seq(0, 100, 10)
 
 }
