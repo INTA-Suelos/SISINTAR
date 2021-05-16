@@ -2,5 +2,6 @@
 
 export(as_SoilProfileCollection)
 export(buscar_perfiles)
+export(exportar_excel)
 export(get_perfiles)
 export(interpolar_perfiles)
