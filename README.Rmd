@@ -35,6 +35,9 @@ remotes::install_github("INTA-Suelos/SISINTAR", build_vignettes = TRUE)
 Para conocer los datos disponibles en SISINTA, la función `buscar_perfiles()` permite buscar perfiles en función de la localización, la fecha y la clase o, si se corre sin argumentos, devolver la lista de perfiles completa. La primera vez que se corre, descarga el archivo http://sisinta.inta.gob.ar/es/perfiles.geojson. 
 
 ```{r}
+library(SISINTAR)
+library(dplyr)
+
 buscar_perfiles() %>% 
   head(10)
 ```

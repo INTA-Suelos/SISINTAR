@@ -32,4 +32,5 @@ Imports:
     urltools,
     data.table,
     sf,
-    openxlsx
+    openxlsx,
+    rappdirs
