@@ -8,27 +8,34 @@ buscar_perfiles(
   rango_lon = NULL,
   rango_lat = NULL,
   rango_fecha = NULL,
-  clase = NULL
+  clase = NULL,
+  actualizar_cada = 30
 )
 }
 \arguments{
 \item{rango_lon, rango_lat}{vectores numéricos con los límites
 de longitud y latitud. La longitud tiene que estar entre -180º y 180º.
-Los límites se definen como el mínimo y el máximo de cada vector.}
+Los límites se definen como el mínimo y el máximo valor de cada vector.}
 
 \item{rango_fecha}{vector tipo Date o que se puede cohercer a fecha con
-\code{as.Date()} que define los límites de fechas.}
+\code{as.Date()} que define el rango de fechas a buscar.}
 
 \item{clase}{vector de caracteres para filtrar la clase del perfil.
-Se lo trata como una expresión regular que no distingue mayúsculas
+La función lo trata como una expresión regular que no distingue mayúsculas
 y minúsculas. Si es un vector de longitud mayor a 1, se filtran las
 clases que coincidan con al menos uno de los elementos (es decir, filtra con O).}
+
+\item{actualizar_cada}{valor numérico que define cada cuantos días se actualiza el archivo
+con la información de la base de datos.}
 }
 \value{
-Un data.frame con los perfiles
+Un data.frame con los perfiles que cumplen las condiciones de búsqueda
 }
 \description{
-Buscar perfiles en base a ubicación y fechas
+La primera vez que se corre la función de descargará el archivo
+http://sisinta.inta.gob.ar/es/perfiles.geojson y se actualizará si el archivo
+fue descargado previamente hace más de 30 días o cuando lo indique el
+argumento actualizar_cada.
 }
 \examples{
 centro <- buscar_perfiles(rango_lat = c(-45, -30))
@@ -37,7 +44,7 @@ with(centro, plot(lon, lat))
 recientes <- buscar_perfiles(rango_fecha = c("2010-01-01", "2025-01-01"))
 with(recientes, plot(lon, lat))
 
-# Periles donde la clase contiene "hapludol" o "natralbol"
+# Perfiles donde la clase contiene "hapludol" o "natralbol"
 buscar_perfiles(clase = c("hapludol", "natralbol"))
 
 }

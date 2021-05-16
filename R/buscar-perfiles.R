@@ -1,7 +1,9 @@
 #' Buscar perfiles en base a ubicación y fechas
 #'
 #' La primera vez que se corre la función de descargará el archivo
-#' http://sisinta.inta.gob.ar/es/perfiles.geojson.
+#' http://sisinta.inta.gob.ar/es/perfiles.geojson y se actualizará si el archivo
+#' fue descargado previamente hace más de 30 días o cuando lo indique el
+#' argumento actualizar_cada.
 #'
 #' @param rango_lon,rango_lat vectores numéricos con los límites
 #' de longitud y latitud. La longitud tiene que estar entre -180º y 180º.
@@ -12,6 +14,8 @@
 #' La función lo trata como una expresión regular que no distingue mayúsculas
 #' y minúsculas. Si es un vector de longitud mayor a 1, se filtran las
 #' clases que coincidan con al menos uno de los elementos (es decir, filtra con O).
+#' @param actualizar_cada valor numérico que define cada cuantos días se actualiza el archivo
+#' con la información de la base de datos.
 #'
 #'
 #' @return
@@ -32,11 +36,11 @@ buscar_perfiles <- function(rango_lon = NULL,
                             rango_lat = NULL,
                             rango_fecha = NULL,
                             clase = NULL,
-                            actualizar_cada = 30,
+                            actualizar_cada = 30
                             ) {
   perfiles <- file_perfiles()
-
-  if (!file.exists(perfiles)) {
+  actualizar_cada <- actualizar_cada*24*3600
+  if (!file.exists(perfiles) || as.numeric(Sys.time()) - as.numeric(file.info(perfiles)$mtime) > actualizar_cada) {
     actualizar_perfiles()
   }
   perfiles <- readRDS(perfiles)
@@ -107,6 +111,6 @@ file_perfiles <- function() {
 }
 
 
-sisintar_datos <- function(){
-  tools::R_user_dir("SISINTAR", "data")
+sisintar_datos <- function() {
+  rappdirs::user_data_dir("SISINTAR")
 }
