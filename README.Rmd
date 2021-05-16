@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-El paquete SISINTAR permite descargar, leer y manipular datos de perfiles de suelo del sistema [SISINTA](http://sisinta.inta.gob.ar/)
+El paquete SISINTAR permite descargar, leer y manipular datos de perfiles de suelo del sistema [SISINTA](http://sisinta.inta.gob.ar/). 
 
 
 ## Instalación 
@@ -29,6 +29,34 @@ Para instalar la versión de desarrollo desde [GitHub](https://github.com/), us�
 # install.packages("remotes")
 remotes::install_github("INTA-Suelos/SISINTAR", build_vignettes = TRUE)
 ```
+
+## Algunas características
+
+Para conocer los datos disponibles en SISINTA, la función `buscar_perfiles()` permite buscar perfiles en función de la localización, la fecha y la clase o, si se corre sin argumentos, devolver la lista de perfiles completa. La primera vez que se corre, descarga el archivo http://sisinta.inta.gob.ar/es/perfiles.geojson. 
+
+```{r}
+buscar_perfiles() %>% 
+  head(10)
+```
+
+Para descargar lo datos de los perfiles se usa la función `get_perfiles()`. Ésta toma un vector con los ids de los perfiles a descargar.
+
+```{r}
+get_perfiles(c(6653, 6347, 6580)) %>% 
+  .[, 1:5] %>% 
+  head(10)
+```
+
+Alternativamente, puede tomar un data.frame que tenga una columna llamada "perfil_id". Esto es para que se pueda usar directamente la salida de `buscar_perfiles()` para descargar los perfiles buscados de acuerdo a cierto criterio.
+
+```{r}
+buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
+                clase = c("hapludol", "natralbol")) %>%
+  get_perfiles() %>% 
+  .[, 1:5] 
+```
+
+También es posible convertir un perfil a un objeto SoilProfileColection y aprovechar las funcionalides de la librería `aqp`, normalizar perfiles y exportarlos.
 
 ## Cómo contribuir
 
