@@ -6,7 +6,7 @@
 #' @examples
 #' perfiles <- get_perfiles(c(3238, 4634))
 #' archivo <- tempfile(fileext = ".shp")
-#' exportar_shapefile(perfiles, archivo)
+#' # exportar_shapefile(perfiles, archivo)
 #'
 #' @export
 exportar_shapefile <- function(perfiles, archivo) {
