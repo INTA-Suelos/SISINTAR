@@ -12,6 +12,7 @@
 #' @param parar_en_error tirar un error si algún perfil tiene una profundidad
 #' máxima que es menor a la indicada. Si es FALSE, interpola hasta la máxima
 #' profundidad disponible y tira un warning.
+#' @param metodo el método de interpolación.
 #'
 #' @returns
 #' Un data.frame con los datos interpolados.
@@ -24,6 +25,7 @@
 #'
 #' @export
 interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
+                                metodo = interpolar_promedio_ponderado(),
                                 parar_en_error = FALSE) {
   variables_string <- variables
   profundidad_superior <- profundidad_inferior <- value <- NULL
@@ -43,10 +45,10 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
   vars <- data.table::as.data.table(perfiles[, c("perfil_id", "profundidad_superior", "profundidad_inferior", variables_string)])
   vars <- data.table::melt(vars, id.vars = c("perfil_id", "profundidad_superior", "profundidad_inferior"))
 
-  vars2 <- vars[, interpolar_promedio_ponderado(profundidad_superior,
-                                                profundidad_inferior,
-                                                value,
-                                                horizontes),
+  vars2 <- vars[, metodo(profundidad_superior,
+                         profundidad_inferior,
+                         value,
+                         horizontes),
                 by = .(perfil_id, variable)]
 
   bad_interpol <- vars2[, .SD[any(!unique(c(profundidad_superior, profundidad_inferior)) %in% horizontes)], by = perfil_id]
@@ -70,37 +72,6 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
 
   as.data.frame(merge(vars2, datos_perfil, by = "perfil_id"))
 
-}
-
-
-
-interpolar_promedio_ponderado <- function(superior, inferior, y, horizontes) {
-  # Do not interpolate below max depth
-  max_depth <- max(inferior, na.rm = TRUE)
-  if (max(horizontes) > max_depth) {
-    horizontes <- horizontes[horizontes <= max_depth]
-    horizontes <- unique(sort(c(horizontes,  max(inferior, na.rm = TRUE))))
-  }
-  x <- c(superior, inferior[length(inferior)])
-  # horizontes_validos <- horizontes[horizontes <= max(x, na.rm = TRUE)]
-  y <- c(y, y[length(y)])
-
-  d <- id <- x2 <- .N <-  NULL
-  temp <- data.table::as.data.table(stats::approx(x, y,
-                                           xout = sort(unique(c(x, horizontes))),
-                                           method = "constant"))
-
-
-  temp[, d := c(diff(x), 0)]
-  # Si el y siguiente es un dato faltante, entonces en realidad no sirve.
-  temp[, d := ifelse(is.na(data.table::shift(y, -1)), NA, d)]
-  temp[, id := cumsum(x  %in% horizontes)]
-  temp <- temp[, .(x = min(x), y = stats::weighted.mean(y, d)), by = id]
-  temp <- temp[x %in% horizontes]
-  temp <- temp[,  .(x, y)]
-  temp[, x2 := data.table::shift(x, n = -1)]
-  data.table::setnames(temp, c("x", "x2", "y"), c("profundidad_superior", "profundidad_inferior", "valor"))
-  return(temp[-.N, ])
 }
 
 .datatable.aware <- TRUE

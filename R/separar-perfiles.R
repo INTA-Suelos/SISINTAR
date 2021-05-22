@@ -25,4 +25,3 @@ separar_perfiles <- function(perfiles) {
   list(sitios = sitios,
        horizontes = horizontes)
 }
-

@@ -8,6 +8,7 @@ interpolar_perfiles(
   perfiles,
   variables,
   horizontes = 30,
+  metodo = interpolar_promedio_ponderado(),
   parar_en_error = FALSE
 )
 }
@@ -20,6 +21,8 @@ a interpolar}
 \item{horizontes}{un vector numérico que determina los horizontes a
 usar para la interpolación o un numérico único que determina la resolución
 en centímetros.}
+
+\item{metodo}{el método de interpolación.}
 
 \item{parar_en_error}{tirar un error si algún perfil tiene una profundidad
 máxima que es menor a la indicada. Si es FALSE, interpola hasta la máxima
