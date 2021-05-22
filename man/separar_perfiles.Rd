@@ -10,10 +10,16 @@ separar_perfiles(perfiles)
 \item{perfiles}{un data.frame con perfiles (salida de \code{\link[=get_perfiles]{get_perfiles()}})}
 }
 \value{
-Una lista con dos elementos. El elemento \code{sitios}, es un data.frmae con
+Una lista con dos elementos. El elemento \code{sitios}, es un data.frame con
 la información de los sitios y el elemneto \code{horizontes} es un data.frame
 con la información de horizontes.
 }
 \description{
-Separar datos de sitio y horizonte en dos tablas
+Esta función permite separar el data.frame que genera \code{\link[=get_perfiles]{get_perfiles()}} que contiene
+la información de perfiles y sus horizontes en dos data.frames organizados en una lista.
+}
+\examples{
+perfiles <- get_perfiles(c(3238))
+separar_perfiles(perfiles)
+
 }
