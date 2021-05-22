@@ -31,16 +31,3 @@ exportar_excel <- function(perfiles, archivo) {
   invisible(archivo)
 }
 
-separar_perfiles <- function(perfiles) {
-
-  perfil_columns <- get_perfil_columns(perfiles)
-
-  sitios <- unique(perfiles[perfil_columns])
-
-
-  horizontes <- perfiles[, !(colnames(perfiles) %in% setdiff(perfil_columns, "perfil_id"))]
-
-  list(sitios = sitios,
-       horizontes = horizontes)
-}
-

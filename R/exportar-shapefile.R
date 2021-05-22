@@ -26,18 +26,6 @@ exportar_shapefile <- function(perfiles, archivo) {
 }
 
 
-anidar_horizontes <- function(perfiles) {
-  perfiles_separado <- separar_perfiles(perfiles)
-  horizontes_separados <- split(perfiles_separado[[2]], perfiles_separado[[2]][["perfil_id"]])
 
-  horizontes_separados <- lapply(horizontes_separados, function(x) x[, colnames(x) != "perfil_id"])
-
-  horizontes_separados <- data.frame(perfil_id = names(horizontes_separados),
-                                     horizontes = I(horizontes_separados))
-  anidado <- merge(horizontes_separados,
-             perfiles_separado[[1]], on = "perfil_id")
-
-  anidado
-}
 
 
