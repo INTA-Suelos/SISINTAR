@@ -10,16 +10,20 @@ anidar_horizontes(perfiles)
 \item{perfiles}{un data.frame con perfiles (salida de \code{\link[=get_perfiles]{get_perfiles()}})}
 }
 \value{
-Un data.frame anidado. El rsultado tiene una fila por cada perfil y una
+Un data.frame anidado. El resultado tiene una fila por cada perfil y una
 columna por cada dato del perfil más una columna llamada "horizontes" que
-tiene un data.frame con los horizontes de ese perfil.
+contiene un data.frame con los horizontes de cada perfil.
 }
 \description{
-Anida datos de horizontes
+La función \code{anidar_horizontes} permite organizar la información de uno
+o más perfiles y sus horizontes en un data.frame. Cada fila se corresponde con
+un perfil y los datos de los horizontes se guardan en una columna de data.frames.
 }
 \examples{
 
 perfiles <- get_perfiles(c(3238, 4634))
-anidar_horizontes(perfiles)
+anidados <- anidar_horizontes(perfiles)
+#Para trabajar con horizontes anidados o desanidarlos se puede utlizar la librería {tidyr}
+#tidyr::unnest(anidados, cols = c(horizontes))
 
 }
