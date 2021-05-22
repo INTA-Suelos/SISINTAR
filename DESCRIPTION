@@ -33,4 +33,6 @@ Imports:
     data.table,
     sf,
     openxlsx,
+    httr,
+    rvest,
     rappdirs

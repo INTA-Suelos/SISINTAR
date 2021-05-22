@@ -13,17 +13,23 @@
 #' actualizar los perfiles ya descargados.
 #' @param parar_en_error tirar un error si algún perfil no está disponible
 #' seguir intentando con los siguientes.
+#' @param credenciales una lista con elementos "usuario" y "pass".
 #'
 #' @return
 #' Un data.frame.
 #'
 #' @examples
 #'
-#' get_perfiles(c(3238, 4634))
+#' get_perfiles(c(3238, 4634, 4609))
 #'
+#' \dontrun{
+#' get_perfiles(4609, credenciales = list(usuario = "usuario",
+#'                                        pass = "pass"))
+#' }
 #'
 #' @export
-get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_error = FALSE) {
+get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_error = FALSE,
+                         credenciales = NULL) {
   if (inherits(perfil_ids, "data.frame")) {
     perfil_ids <- perfil_ids$perfil_id
     if (is.null(perfil_ids)) {
@@ -31,15 +37,20 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
     }
   }
 
-
   urls <- paste0("http://sisinta.inta.gob.ar/es/perfiles/", perfil_ids, ".csv")
   files <- file.path(dir, paste0("sisinta_", perfil_ids, ".csv"))
 
+  if (!is.null(credenciales)) {
+    session <- log_in(credenciales[["usuario"]],
+                      credenciales[["pass"]])
+  } else {
+    session <- NULL
+  }
 
   pbar <- progress::progress_bar$new(total = length(perfil_ids), format = "[:bar] :percent - :eta")
   data <- lapply(seq_along(urls), function(i) {
     if (!file.exists(files[i]) | refresh == TRUE) {
-      utils::download.file(urls[i], files[i], quiet = TRUE)
+      download_perfil(urls[i], files[i], session)
     }
 
     first_line <- readLines(files[i], 1)
@@ -79,3 +90,4 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
 
   return(data)
 }
+

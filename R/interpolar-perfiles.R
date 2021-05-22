@@ -16,7 +16,7 @@
 #' @examples
 #' interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"))
 #' # Horizontes cada 10 centímetros entre 0 y 100.
-#' interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"), seq(0, 100, 10)
+#' interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"), seq(0, 100, 10))
 #'
 #' @export
 interpolar_perfiles <- function(perfiles, variables, horizontes = 30) {

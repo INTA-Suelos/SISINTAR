@@ -8,7 +8,8 @@ get_perfiles(
   perfil_ids,
   dir = tempdir(),
   refresh = FALSE,
-  parar_en_error = FALSE
+  parar_en_error = FALSE,
+  credenciales = NULL
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ actualizar los perfiles ya descargados.}
 
 \item{parar_en_error}{tirar un error si algún perfil no está disponible
 seguir intentando con los siguientes.}
+
+\item{credenciales}{una lista con elementos "usuario" y "pass".}
 }
 \value{
 Un data.frame.
@@ -35,7 +38,11 @@ descargados previamente.
 }
 \examples{
 
-get_perfiles(c(3238, 4634))
+get_perfiles(c(3238, 4634, 4609))
 
+\dontrun{
+get_perfiles(4609, credenciales = list(usuario = "usuario",
+                                       pass = "pass"))
+}
 
 }
