@@ -2,18 +2,25 @@
 % Please edit documentation in R/imputar-na.R
 \name{imputar_profundidad_inferior}
 \alias{imputar_profundidad_inferior}
-\title{Imputa valores faltantes en profundidad inferiror}
+\title{Imputa valores faltantes en profundidad inferior}
 \usage{
 imputar_profundidad_inferior(perfiles, profundidad = 5)
 }
 \arguments{
 \item{perfiles}{un data.frame con perfiles (salida de \code{\link[=get_perfiles]{get_perfiles()}})}
 
-\item{profundidad}{la profundidad asumida de la útlima capa}
+\item{profundidad}{la profundidad asumida de la ultima capa}
 }
 \value{
-Un data.frame igual al de entrada.
+Un data.frame con las mismas filas y columnas que el objeto de entrada.
 }
 \description{
-Imputa valores faltantes en profundidad inferiror
+La función revisa si el perfil tiene valor faltante en la variable
+\code{profundidad_inferior} e imputa un valor dado por \code{profundidad_superior}
+más una constante definida por el argumento \code{profundidad}.
+}
+\examples{
+imputar_profundidad_inferior(get_perfiles(c(3238)))
+imputar_profundidad_inferior(get_perfiles(c(3238)), profundidad = 10)
+
 }

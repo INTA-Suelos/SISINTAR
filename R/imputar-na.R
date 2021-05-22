@@ -1,11 +1,18 @@
-#' Imputa valores faltantes en profundidad inferiror
+#' Imputa valores faltantes en profundidad inferior
+#'
+#' La función revisa si el perfil tiene valor faltante en la variable
+#' \code{profundidad_inferior} e imputa un valor dado por \code{profundidad_superior}
+#' más una constante definida por el argumento \code{profundidad}.
 #'
 #' @param perfiles un data.frame con perfiles (salida de [get_perfiles()])
-#' @param profundidad la profundidad asumida de la útlima capa
+#' @param profundidad la profundidad asumida de la ultima capa
 #'
 #' @returns
-#' Un data.frame igual al de entrada.
+#' Un data.frame con las mismas filas y columnas que el objeto de entrada.
 #'
+#' @examples
+#' imputar_profundidad_inferior(get_perfiles(c(3238)))
+#' imputar_profundidad_inferior(get_perfiles(c(3238)), profundidad = 10)
 #'
 #' @export
 imputar_profundidad_inferior <- function(perfiles, profundidad = 5) {
