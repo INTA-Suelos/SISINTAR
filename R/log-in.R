@@ -1,4 +1,11 @@
-
+#' Inicial sesión en la página de SISINTA
+#'
+#' Esta función interna es utilizada por [get_perfiles()] para acceder a la web de
+#' SISINTA con usuario y contraseña y poder descargar los perfiles no púplicos.
+#'
+#' @param usuario string, usualmente el mail.
+#' @param pass string, contraseña asociada.
+#'
 log_in <- function(usuario, pass) {
   session <- rvest::session("http://sisinta.inta.gob.ar/es/usuarios/sign_in")
   form <- rvest::html_form(session)[[1]]
