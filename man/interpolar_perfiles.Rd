@@ -4,7 +4,12 @@
 \alias{interpolar_perfiles}
 \title{Interpola perfiles}
 \usage{
-interpolar_perfiles(perfiles, variables, horizontes = 30)
+interpolar_perfiles(
+  perfiles,
+  variables,
+  horizontes = 30,
+  parar_en_error = FALSE
+)
 }
 \arguments{
 \item{perfiles}{un data.frame con datos de perfiles}
@@ -15,6 +20,10 @@ a interpolar}
 \item{horizontes}{un vector numérico que determina los horizontes a
 usar para la interpolación o un numérico único que determina la resolución
 en centímetros.}
+
+\item{parar_en_error}{tirar un error si algún perfil tiene una profundidad
+máxima que es menor a la indicada. Si es FALSE, interpola hasta la máxima
+profundidad disponible y tira un warning.}
 }
 \value{
 Un data.frame con los datos interpolados.
@@ -25,6 +34,7 @@ calculando un promedio ponderado.
 }
 \examples{
 interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"))
+
 # Horizontes cada 10 centímetros entre 0 y 100.
 interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"), seq(0, 100, 10))
 
