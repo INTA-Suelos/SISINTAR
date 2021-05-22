@@ -1,7 +1,7 @@
 #' Interpola perfiles
 #'
-#' La función genera perfiles normalizados a horizontes estandarizados
-#' calculando un promedio ponderado.
+#' La función genera perfiles normalizados a partir de horizontes estandarizados
+#' utilizando alguno de los métodos disponibles.
 #'
 #' @param perfiles un data.frame con datos de perfiles
 #' @param variables un vector de texto con los nombres de las variables

@@ -29,8 +29,8 @@ profundidad disponible y tira un warning.}
 Un data.frame con los datos interpolados.
 }
 \description{
-La función genera perfiles normalizados a horizontes estandarizados
-calculando un promedio ponderado.
+La función genera perfiles normalizados a partir de horizontes estandarizados
+utilizando alguno de los métodos disponibles.
 }
 \examples{
 interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"))

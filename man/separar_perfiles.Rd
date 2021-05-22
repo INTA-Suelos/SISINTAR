@@ -16,7 +16,7 @@ con la información de horizontes.
 }
 \description{
 Esta función permite separar el data.frame que genera \code{\link[=get_perfiles]{get_perfiles()}} que contiene
-la información de perfiles y sus horizontes en dos data.frames organizados en una lista.
+la información del sitio y sus horizontes en dos data.frames organizados en una lista.
 }
 \examples{
 perfiles <- get_perfiles(c(3238))
