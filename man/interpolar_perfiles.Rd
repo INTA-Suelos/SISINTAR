@@ -22,7 +22,7 @@ a interpolar}
 usar para la interpolación o un numérico único que determina la resolución
 en centímetros.}
 
-\item{metodo}{el método de interpolación.}
+\item{metodo}{el método de interpolación. Ver \link{metodos_interpolacion}.}
 
 \item{parar_en_error}{tirar un error si algún perfil tiene una profundidad
 máxima que es menor a la indicada. Si es FALSE, interpola hasta la máxima
@@ -37,6 +37,8 @@ utilizando alguno de los métodos disponibles.
 }
 \examples{
 interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"))
+interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"),
+                    metodo = interpolar_spline())
 
 # Horizontes cada 10 centímetros entre 0 y 100.
 interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"), seq(0, 100, 10))
