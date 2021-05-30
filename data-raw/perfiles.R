@@ -1,21 +1,11 @@
-## code to prepare `pefiles` dataset goes here
+## code to prepare `perfiles` dataset goes here
+
+p <- buscar_perfiles()
+
+# Necesitamos uno que tenga NA
+na <- which(p$perfil_id == 3238)
+
+perfiles <- get_perfiles(buscar_perfiles()[c(1:3, na), ])
 
 
-file <- here::here("data-raw", "perfiles.geojson")
-perfiles <- geojsonio::geojson_read(file)
-
-perfiles <- lapply(perfiles$features, function(x) {
-  as.data.frame(
-    c(list(perfil_id = x$properties[["id"]]),
-      x$properties[c("numero", "fecha", "clase")],
-      list(lon = x$geometry$coordinates[[1]],
-           lat = x$geometry$coordinates[[2]]))
-  )
-})
-
-
-perfiles <- do.call(rbind, perfiles)
-
-perfiles$fecha <- as.Date(perfiles$fecha, "%d/%m/%Y")
-
-usethis::use_data(perfiles, overwrite = TRUE, internal = TRUE)
+usethis::use_data(perfiles, overwrite = TRUE)

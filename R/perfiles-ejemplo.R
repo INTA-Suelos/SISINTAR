@@ -1,0 +1,5 @@
+#' Perfiles de ejemplo
+#'
+#'
+#'
+"perfiles"
