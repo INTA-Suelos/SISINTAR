@@ -2,10 +2,11 @@
 #'
 #' @rdname metodos_interpolacion
 #' @export
+# Código adaptado de https://bitbucket.org/brendo1001/ithir/src/master/pkg/R/ea_spline.R
 interpolar_spline <- function(lambda = 0.1) {
   force(lambda)
 
-  function(superior, inferior, y, horizontes) {
+  function(superior, inferior, obs, horizontes) {
     u <- superior
     v <- inferior
     d <- horizontes
@@ -62,7 +63,7 @@ interpolar_spline <- function(lambda = 0.1) {
     z <- fdub%*%dim.mat + ind
 
     ## solve for the fitted layer means
-    sbar <- solve(z, y)
+    sbar <- solve(z, obs)
 
 
     ## calculate the fitted value at the knots

@@ -1,17 +1,26 @@
 ---
-title: "Ejemplos de uso"
-author: "Elio Campitelli y Paola Corrales"
-date: "16/05/2021"
-output: github_document
+title: "ejemplos-de-uso"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ejemplos-de-uso}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
+```{r setup}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(SISINTAR)
 library(dplyr)
 ```
 
+En esta viñeta se presentan distintos ejemplos de uso de las funciones principales del paquete {SISINTA} para trabajar con perfiles de suelo.
 
 ## Buscar datos disponibles
 

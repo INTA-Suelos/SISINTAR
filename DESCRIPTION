@@ -37,6 +37,11 @@ Imports:
     rvest,
     rappdirs
 Suggests: 
+    rmarkdown,
+    knitr
     covr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: 
+    knitr,
+    dplyr
