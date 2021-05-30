@@ -1,25 +1,25 @@
-
+perfiles_id <- sort(c(3238, 4634))
 test_that("descarga perfiles", {
-  skip_if_offline()
+  skip_if(!check_inta())
 
-  perfiles_id <- c(3238, 4634)
-  expect_s3_class(p <- get_perfiles(perfiles_id), "data.frame")
+  expect_s3_class(p <<- get_perfiles(perfiles_id), "data.frame")
   expect_true(nrow(p) > 0)
-  expect_equal(unique(p$perfil_id), perfiles_id)
+  expect_equal(sort(unique(p$perfil_id)), perfiles_id)
 })
 
 
 test_that("se puede cambiar el directorio de descarga", {
-  skip_if_offline()
+  skip_if(!check_inta())
 
   dir <- file.path(tempdir(), "new_dir")
+  expect_s3_class(p2 <- get_perfiles(perfiles_id, dir = dir), "data.frame")
   expect_identical(p, p2)
   expect_true(length(list.files(dir)) == 2)
 })
 
 
 test_that("hay warnigns para perfiles privados", {
-  skip_if_offline()
+  skip_if(!check_inta())
 
   expect_warning(expect_null(get_perfiles(4609), "No se pudieron descargar"))
   expect_error(get_perfiles(4609, parar_en_error = TRUE))
@@ -28,10 +28,16 @@ test_that("hay warnigns para perfiles privados", {
 })
 
 test_that("funcionan las credenciales", {
-  skip_if_offline()
+  skip_if(!check_inta())
+
+  pass <- Sys.getenv("SISINTA.PASS")
+
+  if (identical(pass, "")) {
+    skip("No authentication")
+  }
 
   credenciales <- list(usuario = "paobcorrales@gmail.com",
-                       pass = Sys.getenv("SISINTA.PASS"))
+                       pass = pass)
   expect_warning(p <- get_perfiles(4609, credenciales = credenciales), NA)
   expect_s3_class(p, "data.frame")
   expect_true(nrow(p) > 0)
