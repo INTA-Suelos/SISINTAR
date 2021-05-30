@@ -36,3 +36,9 @@ Imports:
     httr,
     rvest,
     rappdirs
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: 
+    knitr,
+    dplyr
