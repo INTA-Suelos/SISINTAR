@@ -13,6 +13,7 @@
 #' # exportar_shapefile(perfiles, archivo)
 #'
 #' @export
+# nocov start
 exportar_shapefile <- function(perfiles, archivo) {
   perfiles_anidados <- anidar_horizontes(perfiles)
 
@@ -25,7 +26,6 @@ exportar_shapefile <- function(perfiles, archivo) {
 
 }
 
-
-
+# nocov end
 
 
