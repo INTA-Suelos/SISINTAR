@@ -2,10 +2,7 @@
 
 p <- buscar_perfiles()
 
-# Necesitamos uno que tenga NA
-na <- which(p$perfil_id == 3238)
-
-perfiles <- get_perfiles(buscar_perfiles()[c(1:3, na), ])
+perfiles <- get_perfiles(c(1, 3, 3238))
 
 
 usethis::use_data(perfiles, overwrite = TRUE)
