@@ -50,6 +50,9 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
   pbar <- progress::progress_bar$new(total = length(perfil_ids), format = "[:bar] :percent - :eta")
   data <- lapply(seq_along(urls), function(i) {
     if (!file.exists(files[i]) | refresh == TRUE) {
+      if (!dir.exists(dir)) {
+        dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+      }
       download_perfil(urls[i], files[i], session)
     }
 
@@ -85,7 +88,6 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
     fails_text <- paste0("  * ", fails_ids, " (#", fails_n, "). Raz\u00F3n: ", messages, collapse = "\n")
     warning("No se pudieron descargar los siguientes perfiles:\n", fails_text)
   }
-
   data <- do.call(rbind, data[!fails])
 
   return(data)
