@@ -1,6 +1,6 @@
 #' @param lambda parámetro lambda de suavizado.
 #'
-#' @rdname interpolar_promedio_ponderado
+#' @rdname metodos_interpolacion
 #' @export
 interpolar_spline <- function(lambda = 0.1) {
   force(lambda)

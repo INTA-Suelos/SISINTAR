@@ -12,7 +12,7 @@
 #' @param parar_en_error tirar un error si algún perfil tiene una profundidad
 #' máxima que es menor a la indicada. Si es FALSE, interpola hasta la máxima
 #' profundidad disponible y tira un warning.
-#' @param metodo el método de interpolación.
+#' @param metodo el método de interpolación. [metodo_interpolacion]
 #'
 #' @returns
 #' Un data.frame con los datos interpolados.

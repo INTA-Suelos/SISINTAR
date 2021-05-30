@@ -1,7 +1,12 @@
 #' Métodos de interpolación
 #'
 #'
+#' @details
+#'
+#' `interpolar_promedio_ponderado` blabalbalba
+#'
 #' @export
+#' @rdname metodos_interpolacion
 interpolar_promedio_ponderado <- function() {
   function(superior, inferior, y, horizontes) {
   # Do not interpolate below max depth
