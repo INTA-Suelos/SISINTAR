@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # SISINTAR
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/INTA-Suelos/SISINTAR/branch/main/graph/badge.svg)](https://codecov.io/gh/INTA-Suelos/SISINTAR?branch=main)
 <!-- badges: end -->
 
 El paquete SISINTAR permite descargar, leer y manipular datos de perfiles de suelo del sistema [SISINTA](http://sisinta.inta.gob.ar/). 

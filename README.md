@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Codecov test
+coverage](https://codecov.io/gh/INTA-Suelos/SISINTAR/branch/main/graph/badge.svg)](https://codecov.io/gh/INTA-Suelos/SISINTAR?branch=main)
 <!-- badges: end -->
 
 El paquete SISINTAR permite descargar, leer y manipular datos de
