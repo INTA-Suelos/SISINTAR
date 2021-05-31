@@ -39,13 +39,13 @@ interpolar_promedio_ponderado <- function() {
 
   temp[, d := c(diff(x), 0)]
   # Si el y siguiente es un dato faltante, entonces en realidad no sirve.
-  temp[, d := ifelse(is.na(data.table::shift(obs, -1)), NA, d)]
+  temp[, d := ifelse(is.na(data.table::shift(y, -1)), NA, d)]
   temp[, id := cumsum(x  %in% horizontes)]
-  temp <- temp[, .(x = min(x), obs = stats::weighted.mean(obs, d)), by = id]
+  temp <- temp[, .(x = min(x), y = stats::weighted.mean(y, d)), by = id]
   temp <- temp[x %in% horizontes]
-  temp <- temp[,  .(x, obs)]
+  temp <- temp[,  .(x, y)]
   temp[, x2 := data.table::shift(x, n = -1)]
-  data.table::setnames(temp, c("x", "x2", "obs"), c("profundidad_superior", "profundidad_inferior", "valor"))
+  data.table::setnames(temp, c("x", "x2", "y"), c("profundidad_superior", "profundidad_inferior", "valor"))
   return(temp[-.N, ])
 }
 }
