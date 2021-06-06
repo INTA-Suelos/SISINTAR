@@ -11,14 +11,14 @@
 #' con la información de horizontes.
 #'
 #' @examples
-#' perfiles <- get_perfiles(c(3238))
 #' separar_perfiles(perfiles)
 #'
 #' @export
 separar_perfiles <- function(perfiles) {
+  perfiles <- as.data.frame(perfiles)
   perfil_columns <- get_perfil_columns(perfiles)
 
-  sitios <- unique(perfiles[perfil_columns])
+  sitios <- unique(as.data.frame(perfiles)[perfil_columns])
 
   horizontes <- perfiles[, !(colnames(perfiles) %in% setdiff(perfil_columns, "perfil_id"))]
 
