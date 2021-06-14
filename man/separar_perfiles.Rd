@@ -19,7 +19,6 @@ Esta función permite separar el data.frame que genera \code{\link[=get_perfiles
 la información del sitio y sus horizontes en dos data.frames organizados en una lista.
 }
 \examples{
-perfiles <- get_perfiles(c(3238))
 separar_perfiles(perfiles)
 
 }

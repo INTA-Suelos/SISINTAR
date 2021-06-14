@@ -14,6 +14,8 @@
 #' La función lo trata como una expresión regular que no distingue mayúsculas
 #' y minúsculas. Si es un vector de longitud mayor a 1, se filtran las
 #' clases que coincidan con al menos uno de los elementos (es decir, filtra con O).
+#' @param serie vector con nombres de series. El nombre debe ser el mismo que
+#' aparece en la serie. Si alguna serie no se encuentra, la función tira error.
 #' @param actualizar_cada valor numérico que define cada cuantos días se actualiza el archivo
 #' con la información de la base de datos.
 #'
@@ -31,16 +33,20 @@
 #' # Perfiles donde la clase contiene "hapludol" o "natralbol"
 #' buscar_perfiles(clase = c("hapludol", "natralbol"))
 #'
+#' # Perfiles de la serie Ramallo
+#' buscar_perfiles(serie = "Ramallo")
+#'
 #' @export
 buscar_perfiles <- function(rango_lon = NULL,
                             rango_lat = NULL,
                             rango_fecha = NULL,
                             clase = NULL,
+                            serie = NULL,
                             actualizar_cada = 30
-                            ) {
+) {
   perfiles <- file_perfiles()
   actualizar_cada <- actualizar_cada*24*3600
-  if (!file.exists(perfiles) || as.numeric(Sys.time()) - as.numeric(file.info(perfiles)$mtime) > actualizar_cada) {
+  if (!file.exists(perfiles) | as.numeric(Sys.time()) - as.numeric(file.info(perfiles)$mtime) > actualizar_cada) {
     actualizar_perfiles()
   }
   perfiles <- readRDS(perfiles)
@@ -68,6 +74,19 @@ buscar_perfiles <- function(rango_lon = NULL,
     perfiles <- perfiles[keep, ]
   }
 
+  if (!is.null(serie)) {
+    hits <- serie %in% unique(perfiles$serie)
+    if (any(!hits)) {
+      not_found <- serie[!hits]
+      paste0("  * ", not_found)
+      stop("Series inválidas: \n", paste0("  * ", not_found))
+    }
+
+    keep <- perfiles$serie %in% serie
+    perfiles <- perfiles[keep, ]
+
+  }
+
   perfiles
 }
 
@@ -75,19 +94,27 @@ buscar_perfiles <- function(rango_lon = NULL,
 actualizar_perfiles <- function() {
   file <- file_perfiles()
 
-  if (file.exists(file)) {
-    return(file)
-  }
+  # if (file.exists(file)) {
+  #   return(file)
+  # }
   message("Descargando informaci\u00F3n de perfiles...")
   file <- tempfile(fileext = ".geojson")
   utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file)
 
   f <- geojsonio::geojson_read(file)
 
+  parse_serie <- function(serie) {
+    if (is.null(serie)) {
+      return(NA)
+    } else {
+      return(jsonlite::fromJSON(serie)$nombre)
+    }
+  }
   perfiles <- lapply(f$features, function(x) {
     as.data.frame(
       c(list(perfil_id = x$properties[["id"]]),
         x$properties[c("numero", "fecha", "clase")],
+        serie = parse_serie(x$properties[["serie"]]),
         list(lon = x$geometry$coordinates[[1]],
              lat = x$geometry$coordinates[[2]]))
     )

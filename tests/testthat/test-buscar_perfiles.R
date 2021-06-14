@@ -21,5 +21,11 @@ test_that("busca perfiles", {
 
   expect_true(all(grepl("hapludol", p$clase, ignore.case = TRUE) |  grepl("natralbol", p$clase, ignore.case = TRUE)))
 
+  series <- c("Hansen", "Ramallo")
+  p <- buscar_perfiles(serie = series)
+
+  expect_equal(sort(unique(p$serie)), sort(series))
+
+  expect_error(buscar_perfiles(serie = "asfdguifg"), "Series inválidas")
 
   })

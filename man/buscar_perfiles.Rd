@@ -9,6 +9,7 @@ buscar_perfiles(
   rango_lat = NULL,
   rango_fecha = NULL,
   clase = NULL,
+  serie = NULL,
   actualizar_cada = 30
 )
 }
@@ -24,6 +25,9 @@ Los límites se definen como el mínimo y el máximo valor de cada vector.}
 La función lo trata como una expresión regular que no distingue mayúsculas
 y minúsculas. Si es un vector de longitud mayor a 1, se filtran las
 clases que coincidan con al menos uno de los elementos (es decir, filtra con O).}
+
+\item{serie}{vector con nombres de series. El nombre debe ser el mismo que
+aparece en la serie. Si alguna serie no se encuentra, la función tira error.}
 
 \item{actualizar_cada}{valor numérico que define cada cuantos días se actualiza el archivo
 con la información de la base de datos.}
@@ -46,5 +50,8 @@ with(recientes, plot(lon, lat))
 
 # Perfiles donde la clase contiene "hapludol" o "natralbol"
 buscar_perfiles(clase = c("hapludol", "natralbol"))
+
+# Perfiles de la serie Ramallo
+buscar_perfiles(serie = "Ramallo")
 
 }
