@@ -12,7 +12,7 @@ interpolar_spline <- function(lambda = 0.1) {
     d <- horizontes
     n <- length(superior)
     mxd <- max(d)
-
+    y <- NULL
 
     vhigh <- 1000
     vlow <- 0

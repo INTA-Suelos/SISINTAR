@@ -36,11 +36,16 @@ La función genera perfiles normalizados a partir de horizontes estandarizados
 utilizando alguno de los métodos disponibles.
 }
 \examples{
-interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"))
-interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"),
+interpolar_perfiles(perfiles, c("analitico_s", "analitico_t"))
+
+\dontrun{
+# interpolar_spline() no acepta valores faltantes en las profundidades.
+# Para imputar, ver imputar_profundidad_inferior().
+interpolar_perfiles(perfiles, c("analitico_s", "analitico_t"),
                     metodo = interpolar_spline())
 
+}
 # Horizontes cada 10 centímetros entre 0 y 100.
-interpolar_perfiles(get_perfiles(c(3238, 4634)), c("analitico_s", "analitico_t"), seq(0, 100, 10))
+interpolar_perfiles(perfiles, c("analitico_s", "analitico_t"), seq(0, 100, 10))
 
 }

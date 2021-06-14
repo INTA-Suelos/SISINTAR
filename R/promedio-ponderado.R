@@ -31,7 +31,7 @@ interpolar_promedio_ponderado <- function() {
     # horizontes_validos <- horizontes[horizontes <= max(x, na.rm = TRUE)]
     obs <- c(obs, obs[length(obs)])
 
-    d <- id <- x2 <- .N <-  NULL
+    y <- d <- id <- x2 <- .N <-  NULL
     temp <- data.table::as.data.table(stats::approx(x, obs,
                                                     xout = sort(unique(c(x, horizontes))),
                                                     method = "constant"))

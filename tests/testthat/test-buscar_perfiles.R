@@ -26,6 +26,6 @@ test_that("busca perfiles", {
 
   expect_equal(sort(unique(p$serie)), sort(series))
 
-  expect_error(buscar_perfiles(serie = "asfdguifg"), "Series inválidas")
+  expect_error(buscar_perfiles(serie = "asfdguifg"), "Series inv\uE1lidas")
 
   })

@@ -56,6 +56,14 @@ También se puede buscar for fechas. La siguiente búsqueda devuelve los perfile
 buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31")) %>% 
   head(10)
 ```
+Y si se busca los perfiles de una o más series en particular. Este campo es un filtro exacto. La serie tiene que existir así como está escrita, en caso contrario la función tira error. 
+
+```{r}
+buscar_perfiles(serie = c("Ramallo", "Calabresse")) %>% 
+  dplyr::group_by(serie) %>% 
+  slice_head(n = 2)
+```
+
 
 La combinación de criterios de búsqueda devuelve los perfiles que cumplen con ambos criterios. La siguiente búsqueda devuelve perfiles obtenidos en 2019 y que tienen "hapludol" o "natralbol".
 

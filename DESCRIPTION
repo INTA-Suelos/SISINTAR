@@ -35,12 +35,15 @@ Imports:
     openxlsx,
     httr,
     rvest,
-    rappdirs
+    rappdirs,
+    RCurl,
+    jsonlite
 Suggests: 
     rmarkdown,
     knitr,
     covr,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    dplyr
 Config/testthat/edition: 3
 VignetteBuilder: 
     knitr,

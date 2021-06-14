@@ -79,7 +79,7 @@ buscar_perfiles <- function(rango_lon = NULL,
     if (any(!hits)) {
       not_found <- serie[!hits]
       paste0("  * ", not_found)
-      stop("Series inválidas: \n", paste0("  * ", not_found))
+      stop("Series inv\uE1lidas: \n", paste0("  * ", not_found))
     }
 
     keep <- perfiles$serie %in% serie
