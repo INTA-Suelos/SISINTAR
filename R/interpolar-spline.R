@@ -13,6 +13,7 @@ interpolar_spline <- function(lambda = 0.1) {
     n <- length(superior)
     mxd <- max(d)
 
+
     vhigh <- 1000
     vlow <- 0
 
@@ -81,6 +82,7 @@ interpolar_spline <- function(lambda = 0.1) {
     ## fit the spline
     xfit <- matrix(seq_len(mxd), nrow = 1) ## spline will be interpolated onto these depths (1cm res)
     nj <- max(v)
+
     if (nj > mxd) {
       nj <- mxd
     }

@@ -39,6 +39,19 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
     stop("Las variables ", variables_string[!numericas], " no son num\u00e9ricas.")
   }
 
+  # Si el método tiene atributo sisintar_accepts_na y es verdadero, entonces hace
+  # la vista gorda a los NA.
+  na_ok <- attr(metodo, "sisintar_accepts_na", TRUE)
+
+  if (!isTRUE(na_ok)) {
+    if (any(is.na(perfiles$profundidad_inferior))) {
+      bad_perfil <- unique(perfiles[is.na(perfiles$profundidad_inferior), ]$perfil_id)
+
+      stop("Hay perfiles con profundidad inferior NA:\n ", paste0("  * ", bad_perfil$perfil_id),
+           "\nImputar con `imputar_profundidad_inferior()`")
+    }
+  }
+
   if (length(horizontes) == 1) {
     range <- max(perfiles[["profundidad_inferior"]], na.rm = TRUE)
     horizontes <- seq(0, range, by = horizontes)

@@ -143,13 +143,14 @@ get_perfiles(c(3238, 4634)) %>%
                       horizontes = seq(0, 100, 10))
 ```
 
-Para utilizar el método de splines, se utiliza la opción `metodo = interpolar_spline()`:
+Para utilizar el método de splines, se utiliza la opción `metodo = interpolar_spline()`. Este método no acepta datos faltantes en las profundidades, así que primero hay que imputar la profundidad inferior. 
 
 ```{r}
 get_perfiles(c(3238, 4634)) %>% 
+  imputar_profundidad_inferior(10) %>%
   interpolar_perfiles(variables = c("analitico_s", "analitico_t"),
                       horizontes = seq(0, 100, 10),
-                      metodo = interpolar_spline())
+                      metodo = interpolar_spline()) 
 ```
 
 ## Exportar perfiles
