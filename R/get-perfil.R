@@ -46,6 +46,12 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
   } else {
     session <- NULL
   }
+  to_utf8 <- function(x) {
+    if (!is.character(x)) return(x)
+
+    Encoding(x) <- "UTF-8"
+    x
+  }
 
   pbar <- progress::progress_bar$new(total = length(perfil_ids), format = "[:bar] :percent - :eta")
   data <- lapply(seq_along(urls), function(i) {
@@ -75,6 +81,10 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
     }
 
     data <- utils::read.csv(files[i])
+
+    # Tenemos que hacer esto porque adiviná si el archivo está
+    # bien codificado...
+    data <- as.data.frame(lapply(data, to_utf8))
     pbar$tick()
     data
   })
