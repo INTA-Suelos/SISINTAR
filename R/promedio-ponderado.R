@@ -22,15 +22,23 @@
 interpolar_promedio_ponderado <- function() {
 
   approx_safe <-  function(x, y = NULL, xout, method = "linear") {
-    if (sum(!is.na(y)) < 2) {
+    if (sum(!is.na(y)) < 2 || sum(!is.na(x)) < 2) {
       return(list(x = xout, y = rep(NA_real_, length(xout))))
     }
+
+
 
     stats::approx(x = x, y = y, xout = xout, method = method)
   }
 
 
   fun <- function(superior, inferior, obs, horizontes) {
+    if (all(is.na(superior)) || all(is.na(inferior))) {
+      return(data.table::data.table(profundidad_superior = NA_real_,
+                                    profundidad_inferior = NA_real_,
+                                    valor = NA_real_))
+    }
+
     # Do not interpolate below max depth
     max_depth <- max(inferior, na.rm = TRUE)
     if (max(horizontes) > max_depth) {
@@ -44,8 +52,8 @@ interpolar_promedio_ponderado <- function() {
     y <- d <- id <- x2 <- .N <-  NULL
 
     temp <- data.table::as.data.table(approx_safe(x, obs,
-                                                    xout = sort(unique(c(x, horizontes))),
-                                                    method = "constant"))
+                                                  xout = sort(unique(c(x, horizontes))),
+                                                  method = "constant"))
 
 
     temp[, d := c(diff(x), 0)]

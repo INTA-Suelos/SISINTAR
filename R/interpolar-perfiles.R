@@ -50,9 +50,9 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
 
   if (!isTRUE(na_ok)) {
     if (any(is.na(perfiles$profundidad_inferior))) {
-      bad_perfil <- unique(perfiles[is.na(perfiles$profundidad_inferior), ]$perfil_id)
+      bad_perfil <- unique(perfiles[is.na(perfiles$profundidad_inferior), ,drop = FALSE ]$perfil_id)
 
-      stop("Hay perfiles con profundidad inferior NA:\n ", paste0("  * ", bad_perfil$perfil_id),
+      stop("Hay perfiles con profundidad inferior NA:\n ", paste0("  * ", bad_perfil),
            "\nImputar con `imputar_profundidad_inferior()`")
     }
   }
@@ -87,7 +87,7 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
 
   vars2 <- data.table::dcast(vars2, perfil_id + profundidad_superior + profundidad_inferior ~ variable, value.var = "valor")
 
-  datos_perfil <- unique(perfiles[, get_perfil_columns(perfiles)])
+  datos_perfil <- unique(perfiles[, get_perfil_columns(perfiles), drop = FALSE])
 
 
   as.data.frame(merge(vars2, datos_perfil, by = "perfil_id"))

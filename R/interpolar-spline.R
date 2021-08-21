@@ -14,6 +14,12 @@ interpolar_spline <- function(lambda = 0.1) {
     mxd <- max(d)
     y <- NULL
 
+    if (all(is.na(superior)) || all(is.na(inferior))) {
+      return(data.table::data.table(profundidad_superior = NA_real_,
+                                    profundidad_inferior = NA_real_,
+                                    valor = NA_real_))
+    }
+
     vhigh <- 1000
     vlow <- 0
 
@@ -129,7 +135,7 @@ interpolar_spline <- function(lambda = 0.1) {
 
     D <- D[, .(valor = mean(y, na.rm = TRUE)), by = cut(xfit, breaks = d)]
     D[, c("profundidad_superior", "profundidad_inferior") := list(as.vector(d)[-length(d)],
-                                    as.vector(d)[-1])]
+                                                                  as.vector(d)[-1])]
     D[, cut := NULL]
     return(D[])
 
