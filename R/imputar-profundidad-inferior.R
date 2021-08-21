@@ -28,12 +28,16 @@ imputar_profundidad_inferior <- function(perfiles, profundidad = 5) {
 agregar_cm_fin <- function(inferior, superior, cm) {
   n <- length(inferior)
 
-  if (is.na(superior[n])) {
-    superior[n] <- inferior[n-1]
+  if (n > 1) {
+    if (is.na(superior[n])) {
+      superior[n] <- inferior[n-1]
+    }
+
+    if (is.na(inferior[n])) {
+      inferior[n] <- superior[n] + cm
+    }
   }
 
-  if (is.na(inferior[n])) {
-    inferior[n] <- superior[n] + cm
-  }
+
   list(inferior, superior)
 }
