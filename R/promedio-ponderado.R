@@ -20,6 +20,16 @@
 #' @export
 #' @rdname metodos_interpolacion
 interpolar_promedio_ponderado <- function() {
+
+  approx_safe <-  function(x, y = NULL, xout, method = "linear") {
+    if (sum(!is.na(y)) < 2) {
+      return(list(x = xout, y = rep(NA_real_, length(xout))))
+    }
+
+    stats::approx(x = x, y = y, xout = xout, method = method)
+  }
+
+
   fun <- function(superior, inferior, obs, horizontes) {
     # Do not interpolate below max depth
     max_depth <- max(inferior, na.rm = TRUE)
@@ -32,7 +42,8 @@ interpolar_promedio_ponderado <- function() {
     obs <- c(obs, obs[length(obs)])
 
     y <- d <- id <- x2 <- .N <-  NULL
-    temp <- data.table::as.data.table(stats::approx(x, obs,
+
+    temp <- data.table::as.data.table(approx_safe(x, obs,
                                                     xout = sort(unique(c(x, horizontes))),
                                                     method = "constant"))
 

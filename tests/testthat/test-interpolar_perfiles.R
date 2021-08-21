@@ -17,3 +17,16 @@ test_that("interpola spline", {
   expect_identical(unique(c(p_i$profundidad_superior, p_i$profundidad_inferior)), d)
 })
 
+
+test_that("maneja NAs", {
+  d <- seq(0, 50, by = 5)
+
+  pnas <- p
+  pnas$analitico_s <- NA_real_
+
+  expect_equal(unique(interpolar_perfiles(pnas, c("analitico_s"), horizontes = d)$analitico_s),
+               NA_real_)
+  expect_equal(unique(interpolar_perfiles(pnas, c("analitico_s"), horizontes = d, metodo = interpolar_spline())$analitico_s),
+               NA_real_)
+
+})
