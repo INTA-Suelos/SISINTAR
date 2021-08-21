@@ -32,12 +32,11 @@ agregar_cm_fin <- function(inferior, superior, cm) {
     if (is.na(superior[n])) {
       superior[n] <- inferior[n-1]
     }
+  }
 
     if (is.na(inferior[n])) {
       inferior[n] <- superior[n] + cm
     }
-  }
-
 
   list(inferior, superior)
 }
