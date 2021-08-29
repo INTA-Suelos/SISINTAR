@@ -20,6 +20,12 @@ interpolar_spline <- function(lambda = 0.1) {
                                     valor = NA_real_))
     }
 
+    if (n < 2 || any(is.na(obs))) {
+      return(data.table::data.table(profundidad_superior = as.vector(d)[-length(d)],
+                                    profundidad_inferior = as.vector(d)[-1],
+                                    valor = NA_real_))
+    }
+
     vhigh <- 1000
     vlow <- 0
 
@@ -59,12 +65,20 @@ interpolar_spline <- function(lambda = 0.1) {
     rinv <- try(solve(r), TRUE)
 
     # if rinv worked
+    if (inherits(rinv, "try-error")) {
+      return(data.table::data.table(profundidad_superior = as.vector(d)[-length(d)],
+                                    profundidad_inferior = as.vector(d)[-1],
+                                    valor = NA_real_))
+    }
 
     ## identity matrix i
     ind <- diag(1, nrow = n, ncol = n)
 
     ## create the matrix coefficent z
     pr.mat <- matrix(6*n*lambda, ncol = nm1, nrow = n)
+    fdub <- try(pr.mat*t(dim.mat)%*%rinv, silent = TRUE)
+
+    browser(expr = inherits(fdub, "try-error"))
     fdub <- pr.mat*t(dim.mat)%*%rinv
 
     z <- fdub%*%dim.mat + ind
