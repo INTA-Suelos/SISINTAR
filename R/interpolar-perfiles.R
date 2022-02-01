@@ -12,7 +12,8 @@
 #' @param parar_en_error tirar un error si algún perfil tiene una profundidad
 #' máxima que es menor a la indicada. Si es FALSE, interpola hasta la máxima
 #' profundidad disponible y tira un warning.
-#' @param metodo el método de interpolación. Ver [metodos_interpolacion].
+#' @param metodo,metodo_categorico el método de interpolación utilizado para
+#' variables continuas y categóricas, respectivamente. Ver [metodos_interpolacion].
 #'
 #' @returns
 #' Un data.frame con los datos interpolados.
@@ -33,6 +34,7 @@
 #' @export
 interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
                                 metodo = interpolar_promedio_ponderado(),
+                                metodo_categorico = interpolar_concatenar(),
                                 parar_en_error = FALSE) {
   variables_string <- variables
   profundidad_superior <- profundidad_inferior <- value <- NULL
