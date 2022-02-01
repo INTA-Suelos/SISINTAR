@@ -36,15 +36,8 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
                                 metodo = interpolar_promedio_ponderado(),
                                 metodo_categorico = interpolar_concatenar(),
                                 parar_en_error = FALSE) {
-  variables_string <- variables
   profundidad_superior <- profundidad_inferior <- value <- NULL
   perfil_id <- variable <- .SD <- NULL
-
-  numericas <- vapply(perfiles[variables_string], is.numeric, logical(1))
-
-  if (any(!numericas)) {
-    stop("Las variables ", variables_string[!numericas], " no son num\u00e9ricas.")
-  }
 
   # Si el método tiene atributo sisintar_accepts_na y es verdadero, entonces hace
   # la vista gorda a los NA.
@@ -63,37 +56,55 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
     range <- max(perfiles[["profundidad_inferior"]], na.rm = TRUE)
     horizontes <- seq(0, range, by = horizontes)
   }
+  coords <- c("perfil_id", "profundidad_superior", "profundidad_inferior")
+  numericas <- vapply(perfiles[variables], is.numeric, logical(1))
 
-  vars <- data.table::as.data.table(perfiles[, c("perfil_id", "profundidad_superior", "profundidad_inferior", variables_string)])
-  vars <- data.table::melt(vars, id.vars = c("perfil_id", "profundidad_superior", "profundidad_inferior"))
+  vars <- list(vars_cat = perfiles[, variables[!numericas], drop = FALSE],
+               vars_num = perfiles[, variables[numericas], drop = FALSE])
 
-  vars2 <- vars[, metodo(profundidad_superior,
-                         profundidad_inferior,
-                         value,
-                         horizontes),
-                by = .(perfil_id, variable)]
+  bad_interpol <- vector("character")
+  vars2 <- lapply(seq_along(vars), function(i) {
+    if (ncol(vars[[i]]) == 0) {
+      return(data.table::as.data.table(perfiles)[, .(perfil_id = unique(perfil_id))])
+    } else {
+      vars[[i]] <- cbind(vars[[i]], perfiles[, coords])
+    }
 
-  bad_interpol <- vars2[, .SD[any(!unique(c(profundidad_superior, profundidad_inferior)) %in% horizontes)], by = perfil_id]
-  bad_interpol <- unique(bad_interpol$perfil_id)
+    vars <- data.table::melt(data.table::setDT(vars[[i]]), id.vars = coords)
+    if (i == 2) {
+      metodo_fun <- metodo
+    } else {
+      metodo_fun <- metodo_categorico
+    }
+
+    vars2 <- vars[, metodo_fun(profundidad_superior,
+                               profundidad_inferior,
+                               value,
+                               horizontes),
+                  by = .(perfil_id, variable)]
+
+    bad <- vars2[, .SD[any(!unique(c(profundidad_superior, profundidad_inferior)) %in% horizontes)], by = perfil_id]
+    bad_interpol <<- unique(c(bad_interpol, unique(bad$perfil_id)))
+    data.table::dcast(vars2, perfil_id + profundidad_superior + profundidad_inferior ~ variable,
+                      value.var = "valor")
+  })
+
+
+  vars2 <- vars2[[1]][vars2[[2]], on = .NATURAL]
 
   if (length(bad_interpol) != 0) {
     text <- paste0("Se encontraron perfiles con profundidad m\u00E1xima menor al horizonte m\u00E1ximo pedido: \n",
-            paste(paste0(" * ", bad_interpol), collapse = "\n") )
+                   paste(paste0(" * ", bad_interpol), collapse = "\n") )
     if (parar_en_error) {
       stop(text)
     } else {
       warning(text)
     }
-
   }
-
-  vars2 <- data.table::dcast(vars2, perfil_id + profundidad_superior + profundidad_inferior ~ variable, value.var = "valor")
 
   datos_perfil <- unique(perfiles[, get_perfil_columns(perfiles), drop = FALSE])
 
-
   as.data.frame(merge(vars2, datos_perfil, by = "perfil_id"))
-
 }
 
 .datatable.aware <- TRUE

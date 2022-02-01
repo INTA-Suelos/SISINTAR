@@ -32,3 +32,10 @@ test_that("maneja NAs", {
                NA_real_)
 
 })
+
+test_that("interpola valores categóricos",  {
+  expect_warning(interpol_cat <- interpolar_perfiles(p, c("analitico_s", "textura")))
+
+  expect_true(is.character(interpol_cat$textura))
+})
+
