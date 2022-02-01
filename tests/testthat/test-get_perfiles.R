@@ -1,4 +1,5 @@
-perfiles_id <- sort(c(3238, 4634))
+perfiles_id <- sort(c(3238, 1831))
+
 test_that("descarga perfiles", {
   skip_if(!check_inta())
 
