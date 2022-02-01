@@ -65,6 +65,7 @@ interpolar_promedio_ponderado <- function() {
     temp <- temp[,  .(x, y)]
     temp[, x2 := data.table::shift(x, n = -1)]
     data.table::setnames(temp, c("x", "x2", "y"), c("profundidad_superior", "profundidad_inferior", "valor"))
+    data.table::setcolorder(temp, c("profundidad_superior", "profundidad_inferior", "valor"))
     return(temp[-.N, ])
   }
   attr(fun, "sisintar_accepts_na") <- TRUE
