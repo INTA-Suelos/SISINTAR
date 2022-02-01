@@ -151,6 +151,8 @@ interpolar_spline <- function(lambda = 0.1) {
     D[, c("profundidad_superior", "profundidad_inferior") := list(as.vector(d)[-length(d)],
                                                                   as.vector(d)[-1])]
     D[, cut := NULL]
+
+    data.table::setcolorder(D, c("profundidad_superior", "profundidad_inferior", "valor"))
     return(D[])
 
   }

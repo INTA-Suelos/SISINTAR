@@ -12,7 +12,9 @@ test_that("interpola promedio ponderado", {
 
 test_that("interpola spline", {
   d <- seq(0, 50, by = 5)
-  expect_error(p_i <- interpolar_perfiles(p, c("analitico_s", "analitico_t"), horizontes = d, metodo = interpolar_spline()), NA)
+  expect_error(p_i <- interpolar_perfiles(p, c("analitico_s", "analitico_t"),
+                                          horizontes = d,
+                                          metodo = interpolar_spline()), NA)
 
   expect_identical(unique(c(p_i$profundidad_superior, p_i$profundidad_inferior)), d)
 })
