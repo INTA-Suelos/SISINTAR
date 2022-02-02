@@ -85,6 +85,8 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
     # Tenemos que hacer esto porque adiviná si el archivo está
     # bien codificado...
     data <- as.data.frame(lapply(data, to_utf8))
+    data <- normalizar_columnas(data)  # normaliza los nombres
+
     pbar$tick()
     data
   })
@@ -103,3 +105,8 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
   return(data)
 }
 
+
+normalizar_columnas <- function(perfiles) {
+  colnames(perfiles) <- setNames(tabla_nombres$nombre, tabla_nombres$nombre_csv)[colnames(perfiles)]
+  perfiles
+}

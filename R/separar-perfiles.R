@@ -16,7 +16,7 @@
 #' @export
 separar_perfiles <- function(perfiles) {
   perfiles <- as.data.frame(perfiles)
-  perfil_columns <- get_perfil_columns(perfiles)
+  perfil_columns <- get_sitios_columns(perfiles)
 
   sitios <- unique(as.data.frame(perfiles)[perfil_columns])
 

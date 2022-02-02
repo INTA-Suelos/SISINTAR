@@ -15,7 +15,6 @@
 #'
 #' @export
 as_SoilProfileCollection <- function(perfiles) {
-
   perfil_cols <- colnames(perfiles)[startsWith(colnames(perfiles), "perfil_")]
   perfil_cols <- setdiff(perfil_cols, "perfil_id")
 
@@ -28,7 +27,7 @@ as_SoilProfileCollection <- function(perfiles) {
 }
 
 
-get_perfil_columns <- function(data) {
-  colnames(data)[startsWith(colnames(data), "perfil_")]
+get_sitios_columns <- function(data) {
+  colnames(data)[startsWith(colnames(data), "s_")]
 
 }

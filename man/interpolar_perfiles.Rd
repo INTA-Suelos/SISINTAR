@@ -24,7 +24,7 @@ usar para la interpolación o un numérico único que determina la resolución
 en centímetros.}
 
 \item{metodo, metodo_categorico}{el método de interpolación utilizado para
-variables continuas y categóricas, respectivamente.. Ver \link{metodos_interpolacion}.}
+variables continuas y categóricas, respectivamente. Ver \link{metodos_interpolacion}.}
 
 \item{parar_en_error}{tirar un error si algún perfil tiene una profundidad
 máxima que es menor a la indicada. Si es FALSE, interpola hasta la máxima
