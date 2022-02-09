@@ -102,7 +102,7 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
     }
   }
 
-  datos_perfil <- unique(perfiles[, get_perfil_columns(perfiles), drop = FALSE])
+  datos_perfil <- unique(perfiles[, get_sitios_columns(perfiles), drop = FALSE])
 
   as.data.frame(merge(vars2, datos_perfil, by = "perfil_id"))
 }
