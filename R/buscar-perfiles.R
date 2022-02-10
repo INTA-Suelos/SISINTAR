@@ -44,6 +44,7 @@ buscar_perfiles <- function(rango_lon = NULL,
                             serie = NULL,
                             actualizar_cada = 30
 ) {
+
   perfiles <- file_perfiles()
   actualizar_cada <- actualizar_cada*24*3600
   if (!file.exists(perfiles) | as.numeric(Sys.time()) - as.numeric(file.info(perfiles)$mtime) > actualizar_cada) {
@@ -99,29 +100,22 @@ actualizar_perfiles <- function() {
   # }
   message("Descargando informaci\u00F3n de perfiles...")
   file <- tempfile(fileext = ".geojson")
-  utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file)
+  utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file, quiet = TRUE)
 
-  f <- geojsonio::geojson_read(file)
+  perfiles <- sf::st_read(file, quiet = TRUE)
 
-  parse_serie <- function(serie) {
-    if (is.null(serie)) {
-      return(NA)
-    } else {
-      return(jsonlite::fromJSON(serie)$nombre)
-    }
-  }
-  perfiles <- lapply(f$features, function(x) {
-    as.data.frame(
-      c(list(perfil_id = x$properties[["id"]]),
-        x$properties[c("numero", "fecha", "clase")],
-        serie = parse_serie(x$properties[["serie"]]),
-        list(lon = x$geometry$coordinates[[1]],
-             lat = x$geometry$coordinates[[2]]))
-    )
+  perfiles[c("lon", "lat")] <- sf::st_coordinates(perfiles)
 
-  })
-  perfiles <- do.call(rbind, perfiles)
+  perfiles["serie"] <- unname(vapply(perfiles$serie, function(x) {
+    if (is.na(x)) return(NA_character_)
+    jsonlite::fromJSON(x)[["nombre"]]
+    },
+    FUN.VALUE = character(1)))
+
+  perfiles[c("url", "geometry")] <- NULL
+  colnames(perfiles)[colnames(perfiles) == "id"] <- "perfil_id"
   perfiles$fecha <- as.Date(perfiles$fecha, "%d/%m/%Y")
+  perfiles <- as.data.frame(perfiles)
   file <- file_perfiles()
   saveRDS(perfiles, file)
   return(invisible(file))

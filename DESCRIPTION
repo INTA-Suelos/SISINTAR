@@ -27,7 +27,6 @@ Depends: R (>= 2.10)
 Imports: 
     aqp,
     progress,
-    geojsonio,
     xml2,
     urltools,
     data.table,
