@@ -20,15 +20,17 @@
 #'
 #' @export
 anidar_horizontes <- function(perfiles) {
-  perfiles_separado <- separar_perfiles(perfiles)
-  horizontes_separados <- split(perfiles_separado[[2]], perfiles_separado[[2]][["perfil_id"]])
+  vars <- c("perfil_id", get_sitios_columns(perfiles))
 
-  horizontes_separados <- lapply(horizontes_separados, function(x) x[, colnames(x) != "perfil_id"])
+  perfiles <- data.table::as.data.table(perfiles)
+  perfiles <- perfiles[, list(horizontes = list(as.data.frame(.SD))), keyby = c(vars)]
+  data.table::setDF(perfiles)
 
-  horizontes_separados <- data.frame(perfil_id = names(horizontes_separados),
-                                     horizontes = I(horizontes_separados))
-  anidado <- merge(horizontes_separados,
-                   perfiles_separado[[1]], on = "perfil_id")
+}
 
-  anidado
+
+desanidar_horizontes <- function(perfiles) {
+  vars <- colnames(perfiles)[colnames(perfiles) != "horizontes"]
+  perfiles <- data.table::as.data.table(perfiles)[, horizontes[[1]], by  = vars]
+  data.table::setDF(perfiles)
 }
