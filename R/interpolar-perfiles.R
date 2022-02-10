@@ -13,7 +13,7 @@
 #' máxima que es menor a la indicada. Si es FALSE, interpola hasta la máxima
 #' profundidad disponible y tira un warning.
 #' @param metodo,metodo_categorico el método de interpolación utilizado para
-#' variables continuas y categóricas, respectivamente. Ver [metodos_interpolacion].
+#' variables continuas y categóricas, respectivamente. Ver [interpolar_promedio_ponderado()].
 #'
 #' @returns
 #' Un data.frame con los datos interpolados.
