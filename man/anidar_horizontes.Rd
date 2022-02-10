@@ -2,9 +2,12 @@
 % Please edit documentation in R/anidar-horizontes.R
 \name{anidar_horizontes}
 \alias{anidar_horizontes}
+\alias{desanidar_horizontes}
 \title{Anida datos de horizontes}
 \usage{
 anidar_horizontes(perfiles)
+
+desanidar_horizontes(perfiles)
 }
 \arguments{
 \item{perfiles}{un data.frame con perfiles (salida de \code{\link[=get_perfiles]{get_perfiles()}})}
@@ -17,13 +20,16 @@ contiene un data.frame con los horizontes de cada perfil.
 \description{
 La función \code{anidar_horizontes} permite organizar la información de uno
 o más perfiles y sus horizontes en un data.frame. Cada fila se corresponde con
-un perfil y los datos de los horizontes se guardan en una columna de data.frames.
+un perfil y los datos de los horizontes se guardan en una columna de data.frames
+llamada \code{horizonte}.
+\code{desanidar_horizontes} realiza la operación contraria.
 }
 \examples{
 
 perfiles <- get_perfiles(c(3238, 4634))
 anidados <- anidar_horizontes(perfiles)
-#Para trabajar con horizontes anidados o desanidarlos se puede utlizar la librería {tidyr}
-#tidyr::unnest(anidados, cols = c(horizontes))
+
+# igual a perfiles salvo posiblemente por el orden de las columnas
+desanidados <- desanidar_horizontes(anidados)
 
 }

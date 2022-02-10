@@ -1,5 +1,5 @@
 ---
-title: "ejemplos-de-uso"
+title: "Ejemplos de uso"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ejemplos-de-uso}
@@ -24,7 +24,8 @@ En esta viñeta se presentan distintos ejemplos de uso de las funciones principa
 
 ## Buscar datos disponibles
 
-La función `buscar_perfiles()` permite buscar perfiles en función de la localización, la fecha y la clase. La primera vez que se corre, descarga el archivo http://sisinta.inta.gob.ar/es/perfiles.geojson. 
+La función `buscar_perfiles()` permite buscar perfiles en función de la localización, la fecha y la clase.
+La primera vez que se corre, descarga el archivo http://sisinta.inta.gob.ar/es/perfiles.geojson. 
 
 Si se corre sin argumentos, devuelve todos los perfiles disponibles. 
 
@@ -42,7 +43,8 @@ buscar_perfiles() %>%
   head(10)
 ```
 
-La búsqueda por clase devuelve todos los perfiles que contienen alguno de los términos a buscar. Por ejemplo, la siguiente búsqueda devuelve los perfiles que contengan "hapludol" o "natralbol".
+La búsqueda por clase devuelve todos los perfiles que contienen alguno de los términos a buscar.
+Por ejemplo, la siguiente búsqueda devuelve los perfiles que contengan "hapludol" o "natralbol".
 
 ```{r}
 buscar_perfiles(clase = c("hapludol", "natralbol")) %>% 
@@ -50,13 +52,17 @@ buscar_perfiles(clase = c("hapludol", "natralbol")) %>%
 ```
 
 
-También se puede buscar for fechas. La siguiente búsqueda devuelve los perfiles realizados durante 2019.
+También se puede buscar for fechas. 
+La siguiente búsqueda devuelve los perfiles realizados durante 2019.
 
 ```{r}
 buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31")) %>% 
   head(10)
 ```
-Y si se busca los perfiles de una o más series en particular. Este campo es un filtro exacto. La serie tiene que existir así como está escrita, en caso contrario la función tira error. 
+
+Y si se busca los perfiles de una o más series en particular. 
+Este campo es un filtro exacto. 
+La serie tiene que existir así como está escrita, en caso contrario la función tira error. 
 
 ```{r}
 buscar_perfiles(serie = c("Ramallo", "Calabresse")) %>% 
@@ -64,8 +70,8 @@ buscar_perfiles(serie = c("Ramallo", "Calabresse")) %>%
   slice_head(n = 2)
 ```
 
-
-La combinación de criterios de búsqueda devuelve los perfiles que cumplen con ambos criterios. La siguiente búsqueda devuelve perfiles obtenidos en 2019 y que tienen "hapludol" o "natralbol".
+La combinación de criterios de búsqueda devuelve los perfiles que cumplen con ambos criterios. 
+La siguiente búsqueda devuelve perfiles obtenidos en 2019 y que tienen "hapludol" o "natralbol".
 
 ```{r}
 buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
@@ -74,7 +80,8 @@ buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
 
 ## Descarga de datos
 
-Para descargar lo datos de los perfiles se usa la función `get_perfiles()`. Ésta toma un vector con los ids de los perfiles a descargar.
+Para descargar lo datos de los perfiles se usa la función `get_perfiles()`. 
+Ésta toma un vector con los ids de los perfiles a descargar.
 
 ```{r}
 get_perfiles(c(6653, 6347, 6580)) %>% 
@@ -82,7 +89,8 @@ get_perfiles(c(6653, 6347, 6580)) %>%
   head(10)
 ```
 
-Alternativamente, puede tomar un data.frame que tenga una columna llamada "perfil_id". Esto es así para que se pueda usar directamente la salida de `buscar_perfiles()` para descargar los perfiles buscados.
+Alternativamente, puede tomar un data.frame que tenga una columna llamada "perfil_id". 
+Esto es así para que se pueda usar directamente la salida de `buscar_perfiles()` para descargar los perfiles buscados.
 
 ```{r}
 buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
@@ -102,21 +110,25 @@ system.time(get_perfiles(c(3238, 3182)))
 system.time(get_perfiles(c(3238, 3182)))
 ```
 
-La carpeta de descarga se puede cambiar con el argumento `dir` de modo que se puede cambiar a una carpeta permanente de datos dentro de un proyecto. Para forzar la re-descarga de los datos, hay que setear el argumento `refresh = TRUE`.
+La carpeta de descarga se puede cambiar con el argumento `dir` de modo que se puede cambiar a una carpeta permanente de datos dentro de un proyecto. 
+Para forzar la re-descarga de los datos, hay que setear el argumento `refresh = TRUE`.
 
-Algunos perfiles no se pueden descargar públicamente. Cuando pasa esto, `get_perfiles()` devuelve un data.frame con los perfiles que sí se pudieron descargar y un warning describiendo qué problemas hubo.
+Algunos perfiles no se pueden descargar públicamente. 
+Cuando pasa esto, `get_perfiles()` devuelve un data.frame con los perfiles que sí se pudieron descargar y un warning describiendo qué problemas hubo.
 
 ```{r}
 perfiles <- get_perfiles(c(3182, 4609))
 ```
 
-Para elevar este warning a un error, hay que setear el argumento `parar_en_error` a `TRUE`. En este caso, la función va a tirar error al primer perfil que no pueda descargar.
+Para elevar este warning a un error, hay que setear el argumento `parar_en_error` a `TRUE`.
+En este caso, la función va a tirar error al primer perfil que no pueda descargar.
 
 ```{r, error=TRUE}
 get_perfiles(c(3182, 4609), parar_en_error = TRUE)
 ```
 
-Para convertir los perfiles a un SoilProfileCollection se usa `as_SoilProfileCollection()`. En este caso convertimos dos perfiles al mismo tiempo. 
+Para convertir los perfiles a un SoilProfileCollection se usa `as_SoilProfileCollection()`. 
+En este caso convertimos dos perfiles al mismo tiempo. 
 
 ```{r}
 get_perfiles(c(3355, 3205)) %>%
@@ -134,36 +146,40 @@ get_perfiles(c(3355, 3205)) %>%
 
 ## Horizontes estandarizados
 
-La función `interpolar_perfiles()` permite transformar el perfil en horizontes estandarizados utilizando alguno de los métodos implementados, npromedios ponderados o función spline. El argumento `variables` recibe un vector con las variables a estandarizar y por defecto genera horizontes cada 30 centrímetros. 
+La función `interpolar_perfiles()` permite transformar el perfil en horizontes estandarizados utilizando alguno de los métodos implementados, promedios ponderados o función spline. 
+El argumento `variables` recibe un vector con las variables a estandarizar y por defecto genera horizontes cada 30 centrímetros. 
 
 Por defecto utiliza el método de promedios ponderados `interpolar_promedio_ponderado()`:
 
 ```{r}
 get_perfiles(c(3238, 4634)) %>% 
-  interpolar_perfiles(variables = c("analitico_s", "analitico_t"))
+  interpolar_perfiles(variables =  c("sum_bases", "cic"))
 ```
 
 También es posible definir los horizontes estandarizados utilizando el argumento `horizontes`, por ejemplo de 0 a 100, cada 10 centímetros.
 
 ```{r}
 get_perfiles(c(3238, 4634)) %>% 
-  interpolar_perfiles(variables = c("analitico_s", "analitico_t"),
+  interpolar_perfiles(variables =  c("sum_bases", "cic"),
                       horizontes = seq(0, 100, 10))
 ```
 
-Para utilizar el método de splines, se utiliza la opción `metodo = interpolar_spline()`. Este método no acepta datos faltantes en las profundidades, así que primero hay que imputar la profundidad inferior. 
+Para utilizar el método de splines, se utiliza la opción `metodo = interpolar_spline()`. 
+Este método no acepta datos faltantes en las profundidades, así que primero hay que imputar la profundidad inferior. 
 
 ```{r}
 get_perfiles(c(3238, 4634)) %>% 
   imputar_profundidad_inferior(10) %>%
-  interpolar_perfiles(variables = c("analitico_s", "analitico_t"),
+  interpolar_perfiles(variables = c("sum_bases", "cic"),
                       horizontes = seq(0, 100, 10),
                       metodo = interpolar_spline()) 
 ```
 
 ## Exportar perfiles
 
-La función `exportar_excel()` permite exportar perfiles de SISINTA en formato MS Excel. Esta función recibe un data.frame con perfiles leidos o el resultado de `get_perfiles()`. El archivo de excel tendrá dos hojas, la primera con los datos del sitio llamada "sitios" y la segunda con los datos de los horizontes, llamada "horizontes". 
+La función `exportar_excel()` permite exportar perfiles de SISINTA en formato MS Excel.
+Esta función recibe un data.frame con perfiles leidos o el resultado de `get_perfiles()`. 
+El archivo de excel tendrá dos hojas, la primera con los datos del sitio llamada "sitios" y la segunda con los datos de los horizontes, llamada "horizontes". 
 
 ```{r}
 archivo <- tempfile(fileext = ".xlsx") # Temporal para el ejemplo

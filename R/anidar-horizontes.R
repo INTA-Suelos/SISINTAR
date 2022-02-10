@@ -2,7 +2,9 @@
 #'
 #' La función \code{anidar_horizontes} permite organizar la información de uno
 #' o más perfiles y sus horizontes en un data.frame. Cada fila se corresponde con
-#' un perfil y los datos de los horizontes se guardan en una columna de data.frames.
+#' un perfil y los datos de los horizontes se guardan en una columna de data.frames
+#' llamada `horizonte`.
+#' `desanidar_horizontes` realiza la operación contraria.
 #'
 #' @param perfiles un data.frame con perfiles (salida de [get_perfiles()])
 #'
@@ -15,11 +17,13 @@
 #'
 #' perfiles <- get_perfiles(c(3238, 4634))
 #' anidados <- anidar_horizontes(perfiles)
-#' #Para trabajar con horizontes anidados o desanidarlos se puede utlizar la librería {tidyr}
-#' #tidyr::unnest(anidados, cols = c(horizontes))
+#'
+#' # igual a perfiles salvo posiblemente por el orden de las columnas
+#' desanidados <- desanidar_horizontes(anidados)
 #'
 #' @export
 anidar_horizontes <- function(perfiles) {
+
   vars <- c("perfil_id", get_sitios_columns(perfiles))
 
   perfiles <- data.table::as.data.table(perfiles)
@@ -28,8 +32,10 @@ anidar_horizontes <- function(perfiles) {
 
 }
 
-
+#' @export
+#' @rdname anidar_horizontes
 desanidar_horizontes <- function(perfiles) {
+  horizontes <- NULL
   vars <- colnames(perfiles)[colnames(perfiles) != "horizontes"]
   perfiles <- data.table::as.data.table(perfiles)[, horizontes[[1]], by  = vars]
   data.table::setDF(perfiles)

@@ -3,6 +3,7 @@
 export(anidar_horizontes)
 export(as_SoilProfileCollection)
 export(buscar_perfiles)
+export(desanidar_horizontes)
 export(exportar_excel)
 export(exportar_shapefile)
 export(get_perfiles)

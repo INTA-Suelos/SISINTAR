@@ -1,2 +1,2 @@
 .datatable.aware <- TRUE
-globalVariables(c(":=", "."))
+globalVariables(c(":=", ".", ".SD"))

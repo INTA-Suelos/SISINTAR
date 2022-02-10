@@ -108,6 +108,6 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
 
 
 normalizar_columnas <- function(perfiles) {
-  colnames(perfiles) <- setNames(tabla_nombres$nombre, tabla_nombres$nombre_csv)[colnames(perfiles)]
+  colnames(perfiles) <- stats::setNames(tabla_nombres$nombre, tabla_nombres$nombre_csv)[colnames(perfiles)]
   perfiles
 }

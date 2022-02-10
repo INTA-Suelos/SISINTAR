@@ -79,8 +79,7 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
 
     data
   })
-  perfiles <- tidyfast::dt_unnest(perfiles, horizontes)
-
+  perfiles <- data.table::as.data.table(desanidar_horizontes(perfiles))
 
   bad <- perfiles[, .SD[any(!unique(c(profundidad_superior, profundidad_inferior)) %in% horizontes)], by = perfil_id]
   bad_interpol <- unique(bad$perfil_id)
