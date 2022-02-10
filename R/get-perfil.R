@@ -82,6 +82,7 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
 
     data <- utils::read.csv(files[i])
 
+    data$perfil_id <- as.character(data$perfil_id)
     # Tenemos que hacer esto porque adiviná si el archivo está
     # bien codificado...
     data <- as.data.frame(lapply(data, to_utf8))
