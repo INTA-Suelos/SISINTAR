@@ -15,7 +15,7 @@
 #'
 #' @export
 as_SoilProfileCollection <- function(perfiles) {
-  perfil_cols <- colnames(perfiles)[startsWith(colnames(perfiles), "perfil_")]
+  perfil_cols <- get_sitios_columns(perfiles)
   perfil_cols <- setdiff(perfil_cols, "perfil_id")
 
   formula <- stats::as.formula(paste0("~ ", perfil_cols, collapse = " + "))
