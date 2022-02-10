@@ -5,7 +5,7 @@ test_that("descarga perfiles", {
 
   expect_s3_class(p <<- get_perfiles(perfiles_id), "data.frame")
   expect_true(nrow(p) > 0)
-  expect_equal(sort(unique(p$perfil_id)), perfiles_id)
+  expect_equal(sort(unique(p$perfil_id)), as.character(perfiles_id))
 })
 
 
@@ -42,7 +42,7 @@ test_that("funcionan las credenciales", {
   expect_warning(p <- get_perfiles(4609, credenciales = credenciales), NA)
   expect_s3_class(p, "data.frame")
   expect_true(nrow(p) > 0)
-  expect_equal(unique(p$perfil_id), 4609)
+  expect_equal(unique(p$perfil_id), "4609")
 })
 
 
