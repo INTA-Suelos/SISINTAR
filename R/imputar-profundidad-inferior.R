@@ -19,7 +19,7 @@ imputar_profundidad_inferior <- function(perfiles, profundidad = 5) {
   profundidad_inferior <- profundidad_superior <- perfil_id <- NULL
   perfiles <- data.table::as.data.table(perfiles)
 
-  perfiles[, c("profundidad_inferior", "produnfidad_superior") := agregar_cm_fin(profundidad_inferior, profundidad_superior, profundidad),
+  perfiles[, c("profundidad_inferior", "profundidad_superior") := agregar_cm_fin(profundidad_inferior, profundidad_superior, profundidad),
            by = perfil_id]
 
   as.data.frame(perfiles)
