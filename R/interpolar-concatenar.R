@@ -9,7 +9,7 @@ interpolar_concatenar <- function(sep = "|") {
     if (all(is.na(superior)) || all(is.na(inferior))) {
       return(data.table::data.table(profundidad_superior = NA_real_,
                                     profundidad_inferior = NA_real_,
-                                    valor = NA_real_))
+                                    valor = NA_character_))
     }
 
     # Do not interpolate below max depth
