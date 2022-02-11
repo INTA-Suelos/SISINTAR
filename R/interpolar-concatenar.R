@@ -25,6 +25,11 @@ interpolar_concatenar <- function(sep = "|") {
 
     obs <- vapply(seq_along(superior_interp), function(i) {
       capas <- superior <= inferior_interp[i]
+      capas <- capas[!is.na(capas)]
+
+      if (sum(capas) == 0) {
+        return(NA_character_)
+      }
 
       inferior_capas <- inferior[capas]
 
