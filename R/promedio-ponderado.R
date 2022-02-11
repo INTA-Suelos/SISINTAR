@@ -22,7 +22,12 @@
 interpolar_promedio_ponderado <- function() {
 
   approx_safe <-  function(x, y = NULL, xout, method = "linear") {
-    if (sum(!is.na(y)) < 2 || sum(!is.na(x)) < 2) {
+    malas_coord <- is.na(x)
+    y <- y[!malas_coord]
+    x <- x[!malas_coord]
+    pocos_datos <- sum(!is.na(y)) < 2
+
+    if (pocos_datos) {
       return(list(x = xout, y = rep(NA_real_, length(xout))))
     }
 
