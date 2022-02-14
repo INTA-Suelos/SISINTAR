@@ -59,25 +59,31 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
       if (!dir.exists(dir)) {
         dir.create(dir, showWarnings = FALSE, recursive = TRUE)
       }
-      download_perfil(urls[i], files[i], session)
-    }
+      # Si el poceso se cancela, no queda el archivo posta mal formado
+      tempfile <- tempfile()
+      download_perfil(urls[i], tempfile, session)
 
-    first_line <- readLines(files[i], 1)
-    if (first_line == "<!DOCTYPE html>") {
+      first_line <- readLines(tempfile, 1)
+      if (first_line == "<!DOCTYPE html>") {
 
-      doc <- xml2::read_xml(files[i])
-      selector <- ".//*[(@id = 'flash_error')]"  # sale de rvest:::make_selector("#flash_error")
+        doc <- xml2::read_xml(tempfile)
+        selector <- ".//*[(@id = 'flash_error')]"  # sale de rvest:::make_selector("#flash_error")
 
-      message <- xml2::xml_text(xml2::xml_find_first(doc, selector))
-      if (is.na(message)) {
-        message <- ""
+        message <- xml2::xml_text(xml2::xml_find_first(doc, selector))
+        if (is.na(message)) {
+          message <- ""
+        }
+
+        if (parar_en_error) {
+          stop("Error al descargar el perfil ", perfil_ids[i], " (#", i, "). Raz\u00F3n: ", message)
+        }
+        return(message)
       }
 
-      unlink(files[i])
-      if (parar_en_error) {
-        stop("Error al descargar el perfil ", perfil_ids[i], " (#", i, "). Raz\u00F3n: ", message)
-      }
-      return(message)
+      # El archivo está bien
+      # Copiar en vez de mover porque mover no funciona si
+      # son distintas particiones.
+      file.copy(tempfile, files[i])
     }
 
     data <- utils::read.csv(files[i])
