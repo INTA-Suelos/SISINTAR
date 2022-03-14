@@ -8,3 +8,5 @@
 ^ejemplos\.Rmd$
 ^ejemplos\.md$
 ^codecov\.yml$
+
+^actualiza-base$
