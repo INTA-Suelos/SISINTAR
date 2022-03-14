@@ -24,6 +24,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Descarga perfiles.geojson y los mete en el repo
+        continue-on-error: true
         run: |
           curl http://sisinta.inta.gob.ar/es/perfiles.geojson -f -o data-raw/perfiles.geojson
           git config --local user.name "$GITHUB_ACTOR"
