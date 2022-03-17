@@ -95,9 +95,7 @@ buscar_perfiles <- function(rango_lon = NULL,
 actualizar_perfiles <- function() {
   file <- file_perfiles()
 
-  # if (file.exists(file)) {
-  #   return(file)
-  # }
+  fail_inta()
   message("Descargando informaci\u00F3n de perfiles...")
   file <- tempfile(fileext = ".geojson")
   utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file, quiet = TRUE)
