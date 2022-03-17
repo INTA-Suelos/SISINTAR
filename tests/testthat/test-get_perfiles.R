@@ -1,7 +1,7 @@
 perfiles_id <- sort(c(3238, 1831))
 
 test_that("descarga perfiles", {
-  skip_if(!check_inta())
+  skip_if(!check_sisinta())
 
   expect_s3_class(p <<- get_perfiles(perfiles_id), "data.frame")
   expect_true(nrow(p) > 0)
@@ -10,7 +10,7 @@ test_that("descarga perfiles", {
 
 
 test_that("se puede cambiar el directorio de descarga", {
-  skip_if(!check_inta())
+  skip_if(!check_sisinta())
 
   dir <- file.path(tempdir(), "new_dir")
   expect_s3_class(p2 <- get_perfiles(perfiles_id, dir = dir), "data.frame")
@@ -20,7 +20,7 @@ test_that("se puede cambiar el directorio de descarga", {
 
 
 test_that("hay warnigns para perfiles privados", {
-  skip_if(!check_inta())
+  skip_if(!check_sisinta())
 
   expect_warning(expect_null(get_perfiles(4609), "No se pudieron descargar"))
   expect_error(get_perfiles(4609, parar_en_error = TRUE))
@@ -29,7 +29,7 @@ test_that("hay warnigns para perfiles privados", {
 })
 
 test_that("funcionan las credenciales", {
-  skip_if(!check_inta())
+  skip_if(!check_sisinta())
 
   pass <- Sys.getenv("SISINTA.PASS")
 

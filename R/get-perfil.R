@@ -61,7 +61,7 @@ get_perfiles <- function(perfil_ids, dir = tempdir(), refresh = FALSE, parar_en_
       }
       # Si el poceso se cancela, no queda el archivo posta mal formado
       tempfile <- tempfile()
-      fail_inta()
+      fail_sisinta()
       download_perfil(urls[i], tempfile, session)
 
       first_line <- readLines(tempfile, 1)

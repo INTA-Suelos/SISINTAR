@@ -44,7 +44,6 @@ buscar_perfiles <- function(rango_lon = NULL,
                             serie = NULL,
                             actualizar_cada = 30
 ) {
-
   perfiles <- file_perfiles()
   actualizar_cada <- actualizar_cada*24*3600
   if (!file.exists(perfiles) | as.numeric(Sys.time()) - as.numeric(file.info(perfiles)$mtime) > actualizar_cada) {
@@ -95,7 +94,7 @@ buscar_perfiles <- function(rango_lon = NULL,
 actualizar_perfiles <- function() {
   file <- file_perfiles()
 
-  fail_inta()
+  fail_sisinta()
   message("Descargando informaci\u00F3n de perfiles...")
   file <- tempfile(fileext = ".geojson")
   utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file, quiet = TRUE)

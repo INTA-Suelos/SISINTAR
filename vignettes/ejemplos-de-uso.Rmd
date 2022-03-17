@@ -20,6 +20,15 @@ library(SISINTAR)
 library(dplyr)
 ```
 
+```{r, echo = FALSE}
+if (!check_sisinta()) {
+  print("No se pudo conectar con SISINTA. El código siguiente no se va a evaluar.")
+  knitr::opts_chunk$set(
+    eval = FALSE
+  )
+}
+```
+
 En esta viñeta se presentan distintos ejemplos de uso de las funciones principales del paquete {SISINTA} para trabajar con perfiles de suelo.
 
 ## Buscar datos disponibles

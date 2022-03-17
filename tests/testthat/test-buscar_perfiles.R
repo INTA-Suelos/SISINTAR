@@ -3,7 +3,7 @@ unlink(file_perfiles())
 
 
 test_that("busca perfiles", {
-  skip_if(!check_inta())
+  skip_if(!check_sisinta())
 
   expect_message(p <<- buscar_perfiles(rango_lat = c(-45, -30)))
   r <- range(p$lat)
