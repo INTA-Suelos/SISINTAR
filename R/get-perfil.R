@@ -20,9 +20,8 @@
 #'
 #' @examples
 #'
-#' get_perfiles(c(3238, 4634, 4609))
-#'
 #' \dontrun{
+#' get_perfiles(c(3238, 4634, 4609))
 #' get_perfiles(4609, credenciales = list(usuario = "usuario",
 #'                                        pass = "pass"))
 #' }

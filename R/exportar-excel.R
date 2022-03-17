@@ -14,7 +14,7 @@
 #' @examples
 #'
 #' archivo <- tempfile(fileext = ".xlsx")
-#' exportar_excel(get_perfiles(c(3238, 4634)), archivo)
+#' exportar_excel(perfiles, archivo)
 #'
 #' @export
 exportar_excel <- function(perfiles, archivo) {

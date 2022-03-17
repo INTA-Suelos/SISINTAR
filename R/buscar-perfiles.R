@@ -24,6 +24,7 @@
 #' Un data.frame con los perfiles que cumplen las condiciones de búsqueda
 #'
 #' @examples
+#' \dontrun{
 #' centro <- buscar_perfiles(rango_lat = c(-45, -30))
 #' with(centro, plot(lon, lat))
 #'
@@ -35,7 +36,7 @@
 #'
 #' # Perfiles de la serie Ramallo
 #' buscar_perfiles(serie = "Ramallo")
-#'
+#'}
 #' @export
 buscar_perfiles <- function(rango_lon = NULL,
                             rango_lat = NULL,

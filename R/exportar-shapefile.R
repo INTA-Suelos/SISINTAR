@@ -8,7 +8,6 @@
 #' @param archivo la ruta al archivo de salida.
 #'
 #' @examples
-#' perfiles <- get_perfiles(c(3238, 4634))
 #' archivo <- tempfile(fileext = ".shp")
 #' # exportar_shapefile(perfiles, archivo)
 #'

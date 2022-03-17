@@ -15,7 +15,6 @@
 #'
 #' @examples
 #'
-#' perfiles <- get_perfiles(c(3238, 4634))
 #' anidados <- anidar_horizontes(perfiles)
 #'
 #' # igual a perfiles salvo posiblemente por el orden de las columnas

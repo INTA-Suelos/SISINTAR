@@ -20,7 +20,8 @@ La función revisa si el perfil tiene valor faltante en la variable
 más una constante definida por el argumento \code{profundidad}.
 }
 \examples{
-imputar_profundidad_inferior(get_perfiles(c(3238)))
-imputar_profundidad_inferior(get_perfiles(c(3238)), profundidad = 10)
+perfil <- subset(perfiles, perfil_id == 3238)
+imputar_profundidad_inferior(perfil)
+imputar_profundidad_inferior(perfil, profundidad = 10)
 
 }

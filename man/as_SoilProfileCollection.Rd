@@ -19,7 +19,6 @@ SoilProfileCollection del paquete \code{aqp}.
 }
 \examples{
 
-perfiles <- get_perfiles(c(3238, 4634))
 coleccion <- as_SoilProfileCollection(perfiles)
 
 }

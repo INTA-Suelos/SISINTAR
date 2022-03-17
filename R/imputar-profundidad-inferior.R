@@ -11,8 +11,9 @@
 #' Un data.frame con las mismas filas y columnas que el objeto de entrada.
 #'
 #' @examples
-#' imputar_profundidad_inferior(get_perfiles(c(3238)))
-#' imputar_profundidad_inferior(get_perfiles(c(3238)), profundidad = 10)
+#' perfil <- subset(perfiles, perfil_id == 3238)
+#' imputar_profundidad_inferior(perfil)
+#' imputar_profundidad_inferior(perfil, profundidad = 10)
 #'
 #' @export
 imputar_profundidad_inferior <- function(perfiles, profundidad = 5) {

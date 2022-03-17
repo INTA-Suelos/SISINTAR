@@ -42,6 +42,7 @@ fue descargado previamente hace más de 30 días o cuando lo indique el
 argumento actualizar_cada.
 }
 \examples{
+\dontrun{
 centro <- buscar_perfiles(rango_lat = c(-45, -30))
 with(centro, plot(lon, lat))
 
@@ -53,5 +54,5 @@ buscar_perfiles(clase = c("hapludol", "natralbol"))
 
 # Perfiles de la serie Ramallo
 buscar_perfiles(serie = "Ramallo")
-
+}
 }

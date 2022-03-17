@@ -17,7 +17,6 @@ con \code{\link[=get_perfiles]{get_perfiles()}} en formato shapefile. !!! REQUIE
 COLUMNAS MÁS CORTOS
 }
 \examples{
-perfiles <- get_perfiles(c(3238, 4634))
 archivo <- tempfile(fileext = ".shp")
 # exportar_shapefile(perfiles, archivo)
 
