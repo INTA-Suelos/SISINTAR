@@ -29,5 +29,6 @@ jobs:
           curl http://sisinta.inta.gob.ar/es/perfiles.geojson -f -o data-raw/perfiles.geojson
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git commit data-raw/perfiles.geojson -m 'Actualiza perfiles.geojson' || echo "No changes to commit"
+          git add data-raw/perfiles.geojson
+          git commit -m 'Actualiza perfiles.geojson' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
