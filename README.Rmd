@@ -28,7 +28,7 @@ Para instalar la versión de desarrollo desde [GitHub](https://github.com/), us�
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("INTA-Suelos/SISINTAR", build_vignettes = TRUE)
+remotes::install_github("INTA-Suelos/SISINTAR")
 ```
 
 ## Algunas características

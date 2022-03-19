@@ -19,7 +19,7 @@ Para instalar la versión de desarrollo desde
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("INTA-Suelos/SISINTAR", build_vignettes = TRUE)
+remotes::install_github("INTA-Suelos/SISINTAR")
 ```
 
 ## Algunas características
@@ -49,23 +49,34 @@ buscar_perfiles() %>%
 #> 2          3  13/656 C 1967-03-17
 #> 3          4 13/1255 C 1969-10-24
 #> 4          6      37 C 1987-08-21
-#> 5          7     789 C 1900-01-01
-#> 6         18   6/207 C 1965-05-02
+#> 5          7     789 C 1976-11-01
+#> 6         18   6/207 C 1965-10-07
 #> 7         22      15 C 1990-01-01
 #> 8         28  9/1431 C 1969-09-20
 #> 9         38 23/1245 C 1989-06-01
-#> 10        46        46 1900-01-01
-#>                                                    clase       lon       lat
-#> 1          Natralbol típico, franca fina, mixta, térmica -61.85000 -34.17250
-#> 2                                       Natralbol típico -60.74271 -34.46339
-#> 3                       Argiacuol típico, fina, illítica -58.35011 -35.09693
-#> 4                         Hapludol éntico, franca gruesa -62.40742 -34.87200
-#> 5         Natracualf típico, limosa fina, mixta, térmica -62.20000 -34.10667
-#> 6               Argiudol típico, fina, illítica, térmica -59.42444 -33.83333
-#> 7                                       Natracuol dúrico -62.80778 -34.45722
-#> 8                                     Argiudol abrúptico -58.29163 -35.17931
-#> 9           Hapludol típico, franca fina, mixta, térmica -61.93083 -35.78833
-#> 10 Argiudol típico, limosa/arcillosa fina,mixta, térmica -61.55278 -33.82500
+#> 10        51 25/1944 C 1986-10-28
+#>                                             clase             serie       lon
+#> 1   Natralbol típico, franca fina, mixta, térmica Aarón Castellanos -61.85000
+#> 2                                Natralbol típico      Agustín Roca -60.74271
+#> 3                Argiacuol típico, fina, illítica    Alejandro Korn -58.35011
+#> 4                  Hapludol éntico, franca gruesa          Ameghino -62.40742
+#> 5  Natracualf típico, limosa fina, mixta, térmica          Amenábar -62.19973
+#> 6       Argialbol típico, fina, illítica, térmica            Atucha -59.43827
+#> 7                                Natracuol dúrico            Balbín -62.80778
+#> 8                              Argiudol abrúptico          Brandsen -58.29163
+#> 9    Hapludol típico, franca fina, mixta, térmica    Carlos Tejedor -61.93083
+#> 10   Argiudol lítico, franca fina, mixta, térmica         Copetonas -60.35188
+#>          lat
+#> 1  -34.17250
+#> 2  -34.46339
+#> 3  -35.09693
+#> 4  -34.87200
+#> 5  -34.10774
+#> 6  -33.87714
+#> 7  -34.45722
+#> 8  -35.17931
+#> 9  -35.78833
+#> 10 -38.80600
 ```
 
 Para descargar lo datos de los perfiles se usa la función
@@ -76,32 +87,21 @@ descargar.
 get_perfiles(c(6653, 6347, 6580)) %>% 
   .[, 1:5] %>% 
   head(10)
-#>    analitico_registro analitico_humedad analitico_s analitico_t
-#> 1               21711                NA        5.93       19.73
-#> 2               21712                NA        5.82       18.22
-#> 3                  NA                NA          NA          NA
-#> 4                  NA                NA          NA          NA
-#> 5                  NA                NA          NA       15.84
-#> 6                  NA                NA          NA       15.07
-#> 7                  NA                NA          NA       16.10
-#> 8                  NA                NA          NA          NA
-#> 9               21687                NA        1.49       20.89
-#> 10              21688                NA        1.24       18.34
-#>    analitico_ph_pasta
-#> 1                  NA
-#> 2                  NA
-#> 3                  NA
-#> 4                  NA
-#> 5                  NA
-#> 6                  NA
-#> 7                  NA
-#> 8                  NA
-#> 9                  NA
-#> 10                 NA
+#>    no_registro eq_humedad sum_bases   cic ph_pasta
+#> 1        21711         NA      5.93 19.73       NA
+#> 2        21712         NA      5.82 18.22       NA
+#> 3           NA         NA        NA    NA       NA
+#> 4           NA         NA        NA    NA       NA
+#> 5           NA         NA        NA 15.84       NA
+#> 6           NA         NA        NA 15.07       NA
+#> 7           NA         NA        NA 16.10       NA
+#> 8           NA         NA        NA    NA       NA
+#> 9        21687         NA      1.49 20.89       NA
+#> 10       21688         NA      1.24 18.34       NA
 ```
 
 Alternativamente, puede tomar un data.frame que tenga una columna
-llamada “perfil\_id”. Esto es para que se pueda usar directamente la
+llamada “perfil_id”. Esto es para que se pueda usar directamente la
 salida de `buscar_perfiles()` para descargar los perfiles buscados de
 acuerdo a cierto criterio.
 
@@ -110,14 +110,10 @@ buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
                 clase = c("hapludol", "natralbol")) %>%
   get_perfiles() %>% 
   .[, 1:5] 
-#>   analitico_registro analitico_humedad analitico_s analitico_t
-#> 1              21711                NA        5.93       19.73
-#> 2              21712                NA        5.82       18.22
-#> 3                 NA                NA          NA          NA
-#>   analitico_ph_pasta
-#> 1                 NA
-#> 2                 NA
-#> 3                 NA
+#>   no_registro eq_humedad sum_bases   cic ph_pasta
+#> 1       21711         NA      5.93 19.73       NA
+#> 2       21712         NA      5.82 18.22       NA
+#> 3          NA         NA        NA    NA       NA
 ```
 
 También es posible convertir un perfil a un objeto SoilProfileColection
