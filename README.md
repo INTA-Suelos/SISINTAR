@@ -31,17 +31,8 @@ devolver la lista de perfiles completa.
 
 ``` r
 library(SISINTAR)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 
-buscar_perfiles() %>% 
+buscar_perfiles() |> 
   head(10)
 #>    perfil_id    numero      fecha
 #> 1          1         1 1976-01-01
@@ -83,8 +74,8 @@ Para descargar lo datos de los perfiles se usa la función
 descargar.
 
 ``` r
-get_perfiles(c(6653, 6347, 6580)) %>% 
-  .[, 1:5] %>% 
+get_perfiles(c(6653, 6347, 6580)) |> 
+  subset(select = 1:5) |> 
   head(10)
 #>       no_registro eq_humedad sum_bases   cic ph_pasta
 #> 23652       21711         NA      5.93 19.73       NA
@@ -106,9 +97,9 @@ acuerdo a cierto criterio.
 
 ``` r
 buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
-                clase = c("hapludol", "natralbol")) %>%
-  get_perfiles() %>% 
-  .[, 1:5] 
+                clase = c("hapludol", "natralbol")) |>
+  get_perfiles() |> 
+  subset(select = 1:5)
 #>   no_registro eq_humedad sum_bases   cic ph_pasta
 #> 1       21711         NA      5.93 19.73       NA
 #> 2       21712         NA      5.82 18.22       NA

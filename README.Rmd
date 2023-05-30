@@ -37,17 +37,16 @@ Para conocer los datos disponibles en SISINTA, la función `buscar_perfiles()` p
 
 ```{r}
 library(SISINTAR)
-library(dplyr)
 
-buscar_perfiles() %>% 
+buscar_perfiles() |> 
   head(10)
 ```
 
 Para descargar lo datos de los perfiles se usa la función `get_perfiles()`. Ésta toma un vector con los ids de los perfiles a descargar.
 
 ```{r}
-get_perfiles(c(6653, 6347, 6580)) %>% 
-  .[, 1:5] %>% 
+get_perfiles(c(6653, 6347, 6580)) |> 
+  subset(select = 1:5) |> 
   head(10)
 ```
 
@@ -55,9 +54,9 @@ Alternativamente, puede tomar un data.frame que tenga una columna llamada "perfi
 
 ```{r}
 buscar_perfiles(rango_fecha = c("2019-01-01", "2019-12-31"),
-                clase = c("hapludol", "natralbol")) %>%
-  get_perfiles() %>% 
-  .[, 1:5] 
+                clase = c("hapludol", "natralbol")) |>
+  get_perfiles() |> 
+  subset(select = 1:5)
 ```
 
 También es posible convertir un perfil a un objeto SoilProfileColection y aprovechar las funcionalides de la librería `aqp`, normalizar perfiles y exportarlos.
