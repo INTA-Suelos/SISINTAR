@@ -69,7 +69,8 @@ interpolar_perfiles <- function(perfiles, variables, horizontes = 30,
         metodo_fun <- metodo_categorico
       }
 
-      data <- with(p, metodo_fun(profundidad_superior, profundidad_inferior, get(var), horizontes))
+      data <- try(with(p, metodo_fun(profundidad_superior, profundidad_inferior, get(var), horizontes)))
+
       colnames(data)[3] <- var
       data
     })

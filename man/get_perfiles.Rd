@@ -21,11 +21,10 @@ Alternativamente puede ser un data.frame con una columna llamada
 donde se leen perfiles ya descargados. Por defecto, los perfiles
 descargados se guardan en una carpeta temporal.}
 
-\item{refresh}{boleano, fuerza la descarga de los datos para
-actualizar los perfiles ya descargados.}
+\item{refresh}{boleano, fuerza descargar datos de SISINTA.}
 
 \item{parar_en_error}{tirar un error si algún perfil no está disponible
-seguir intentando con los siguientes.}
+en vez de seguir intentando con los siguientes.}
 
 \item{credenciales}{una lista con elementos "usuario" y "pass".}
 }
@@ -33,8 +32,11 @@ seguir intentando con los siguientes.}
 Un data.frame.
 }
 \description{
-\code{get_perfies} descarga perfiles desde SISINTA o lee perfiles
-descargados previamente.
+Obtiene datos de perfiles.
+Por defecto, primero intenta leer datos existentes en \code{dir}, si no existen,
+usa los datos incluidos en el paquete, y si no existen, trata de descargarlos
+desde SISINTA. Esto garantiza reproducibilidad del proyecto o bajo mismas
+versiones del paquete y minimiza la dependencia de una conexión a internet.
 }
 \examples{
 

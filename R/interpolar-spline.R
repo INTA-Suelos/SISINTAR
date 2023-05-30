@@ -78,7 +78,12 @@ interpolar_spline <- function(lambda = 0.1) {
     pr.mat <- matrix(6*n*lambda, ncol = nm1, nrow = n)
     fdub <- try(pr.mat*t(dim.mat)%*%rinv, silent = TRUE)
 
-    browser(expr = inherits(fdub, "try-error"))
+    # if rinv worked
+    if (inherits(fdub, "try-error")) {
+      return(data.table::data.table(profundidad_superior = as.vector(d)[-length(d)],
+                                    profundidad_inferior = as.vector(d)[-1],
+                                    valor = NA_real_))
+    }
     fdub <- pr.mat*t(dim.mat)%*%rinv
 
     z <- fdub%*%dim.mat + ind
@@ -127,7 +132,11 @@ interpolar_spline <- function(lambda = 0.1) {
       } else {
         p <- NA
       }
-      if (length(p) != 1) stop("!!")
+
+      if (length(p) != 1) {
+        browser()
+        }
+
 
       yfit[k] <- p
     }

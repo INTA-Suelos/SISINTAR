@@ -28,7 +28,7 @@ anidar_horizontes <- function(perfiles) {
   perfiles <- data.table::as.data.table(perfiles)
   perfiles <- perfiles[, list(horizontes = list(as.data.frame(.SD))), keyby = c(vars)]
   data.table::setDF(perfiles)
-
+  perfiles
 }
 
 #' @export

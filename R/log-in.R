@@ -7,6 +7,10 @@
 #' @param pass string, contraseña asociada.
 #'
 log_in <- function(usuario, pass) {
+  if (is.null(usuario)) {
+    return(NULL)
+  }
+
   session <- rvest::session("http://sisinta.inta.gob.ar/es/usuarios/sign_in")
   form <- rvest::html_form(session)[[1]]
   form <- rvest::html_form_set(form,

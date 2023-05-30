@@ -43,93 +43,44 @@ buscar_perfiles <- function(rango_lon = NULL,
                             rango_fecha = NULL,
                             clase = NULL,
                             serie = NULL,
-                            actualizar_cada = 30
-) {
-  perfiles <- file_perfiles()
-  actualizar_cada <- actualizar_cada*24*3600
-  if (!file.exists(perfiles) | as.numeric(Sys.time()) - as.numeric(file.info(perfiles)$mtime) > actualizar_cada) {
-    actualizar_perfiles()
-  }
-  perfiles <- readRDS(perfiles)
-
+                            actualizar_cada = 30) {
   if (!is.null(rango_lon)) {
-    keep <- perfiles$lon >= min(rango_lon) & perfiles$lon <= max(rango_lon)
-    perfiles <- perfiles[keep, ]
+    keep <- perfiles_meta$lon >= min(rango_lon) & perfiles_meta$lon <= max(rango_lon)
+    perfiles_meta <- perfiles_meta[keep, ]
   }
 
   if (!is.null(rango_lat)) {
-    keep <- perfiles$lat >= min(rango_lat) & perfiles$lat <= max(rango_lat)
-    perfiles <- perfiles[keep, ]
+    keep <- perfiles_meta$lat >= min(rango_lat) & perfiles_meta$lat <= max(rango_lat)
+    perfiles_meta <- perfiles_meta[keep, ]
   }
 
   if (!is.null(rango_fecha)) {
     rango_fecha <- as.Date(rango_fecha)
-    keep <- perfiles$fecha >= min(rango_fecha) & perfiles$fecha <= max(rango_fecha)
-    perfiles <- perfiles[keep, ]
+    keep <- perfiles_meta$fecha >= min(rango_fecha) & perfiles_meta$fecha <= max(rango_fecha)
+    perfiles_meta <- perfiles_meta[keep, ]
   }
 
   if (!is.null(clase)) {
-    keep <- lapply(clase, function(x) grepl(x, perfiles$clase, ignore.case = TRUE))
+    keep <- lapply(clase, function(x) grepl(x, perfiles_meta$clase, ignore.case = TRUE))
     keep <- Reduce("|", keep)
 
-    perfiles <- perfiles[keep, ]
+    perfiles_meta <- perfiles_meta[keep, ]
   }
 
   if (!is.null(serie)) {
-    hits <- serie %in% unique(perfiles$serie)
+    hits <- serie %in% unique(perfiles_meta$serie)
     if (any(!hits)) {
       not_found <- serie[!hits]
       paste0("  * ", not_found)
       stop("Series inv\uE1lidas: \n", paste0("  * ", not_found))
     }
 
-    keep <- perfiles$serie %in% serie
-    perfiles <- perfiles[keep, ]
+    keep <- perfiles_meta$serie %in% serie
+    perfiles_meta <- perfiles_meta[keep, ]
 
   }
 
-  perfiles
+  perfiles_meta
 }
 
 
-actualizar_perfiles <- function() {
-  file <- file_perfiles()
-
-  fail_sisinta()
-  message("Descargando informaci\u00F3n de perfiles...")
-  file <- tempfile(fileext = ".geojson")
-  utils::download.file("http://sisinta.inta.gob.ar/es/perfiles.geojson", file, quiet = TRUE)
-
-  perfiles <- sf::st_read(file, quiet = TRUE)
-
-  perfiles[c("lon", "lat")] <- sf::st_coordinates(perfiles)
-
-  perfiles["serie"] <- unname(vapply(perfiles$serie, function(x) {
-    if (is.na(x)) return(NA_character_)
-    jsonlite::fromJSON(x)[["nombre"]]
-    },
-    FUN.VALUE = character(1)))
-
-  perfiles[c("url", "geometry")] <- NULL
-  colnames(perfiles)[colnames(perfiles) == "id"] <- "perfil_id"
-  perfiles$fecha <- as.Date(perfiles$fecha, "%d/%m/%Y")
-  perfiles <- as.data.frame(perfiles)
-  file <- file_perfiles()
-  saveRDS(perfiles, file)
-  return(invisible(file))
-}
-
-file_perfiles <- function() {
-  dir <- sisintar_datos()
-
-  if (!dir.exists(dir)) {
-    dir.create(dir, recursive = TRUE)
-  }
-
-  file.path(dir, "perfiles.Rds")
-}
-
-
-sisintar_datos <- function() {
-  rappdirs::user_data_dir("SISINTAR")
-}
