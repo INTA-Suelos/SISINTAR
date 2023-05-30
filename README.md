@@ -27,8 +27,7 @@ remotes::install_github("INTA-Suelos/SISINTAR")
 Para conocer los datos disponibles en SISINTA, la función
 `buscar_perfiles()` permite buscar perfiles en función de la
 localización, la fecha y la clase o, si se corre sin argumentos,
-devolver la lista de perfiles completa. La primera vez que se corre,
-descarga el archivo <http://sisinta.inta.gob.ar/es/perfiles.geojson>.
+devolver la lista de perfiles completa.
 
 ``` r
 library(SISINTAR)
@@ -87,17 +86,17 @@ descargar.
 get_perfiles(c(6653, 6347, 6580)) %>% 
   .[, 1:5] %>% 
   head(10)
-#>    no_registro eq_humedad sum_bases   cic ph_pasta
-#> 1        21711         NA      5.93 19.73       NA
-#> 2        21712         NA      5.82 18.22       NA
-#> 3           NA         NA        NA    NA       NA
-#> 4           NA         NA        NA    NA       NA
-#> 5           NA         NA        NA 15.84       NA
-#> 6           NA         NA        NA 15.07       NA
-#> 7           NA         NA        NA 16.10       NA
-#> 8           NA         NA        NA    NA       NA
-#> 9        21687         NA      1.49 20.89       NA
-#> 10       21688         NA      1.24 18.34       NA
+#>       no_registro eq_humedad sum_bases   cic ph_pasta
+#> 23652       21711         NA      5.93 19.73       NA
+#> 23653       21712         NA      5.82 18.22       NA
+#> 23654          NA         NA        NA    NA       NA
+#> 22537          NA         NA        NA    NA       NA
+#> 22538          NA         NA        NA 15.84       NA
+#> 22539          NA         NA        NA 15.07       NA
+#> 22540          NA         NA        NA 16.10       NA
+#> 22541          NA         NA        NA    NA       NA
+#> 23390       21687         NA      1.49 20.89       NA
+#> 23391       21688         NA      1.24 18.34       NA
 ```
 
 Alternativamente, puede tomar un data.frame que tenga una columna
