@@ -30,16 +30,13 @@ clases que coincidan con al menos uno de los elementos (es decir, filtra con O).
 aparece en la serie. Si alguna serie no se encuentra, la función tira error.}
 
 \item{actualizar_cada}{valor numérico que define cada cuantos días se actualiza el archivo
-con la información de la base de datos.}
+con la información de la base de datos (no usado)}
 }
 \value{
 Un data.frame con los perfiles que cumplen las condiciones de búsqueda
 }
 \description{
-La primera vez que se corre la función de descargará el archivo
-http://sisinta.inta.gob.ar/es/perfiles.geojson y se actualizará si el archivo
-fue descargado previamente hace más de 30 días o cuando lo indique el
-argumento actualizar_cada.
+Buscar perfiles en base a ubicación y fechas
 }
 \examples{
 \dontrun{

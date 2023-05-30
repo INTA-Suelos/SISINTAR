@@ -1,10 +1,5 @@
 #' Buscar perfiles en base a ubicación y fechas
 #'
-#' La primera vez que se corre la función de descargará el archivo
-#' http://sisinta.inta.gob.ar/es/perfiles.geojson y se actualizará si el archivo
-#' fue descargado previamente hace más de 30 días o cuando lo indique el
-#' argumento actualizar_cada.
-#'
 #' @param rango_lon,rango_lat vectores numéricos con los límites
 #' de longitud y latitud. La longitud tiene que estar entre -180º y 180º.
 #' Los límites se definen como el mínimo y el máximo valor de cada vector.
@@ -17,7 +12,7 @@
 #' @param serie vector con nombres de series. El nombre debe ser el mismo que
 #' aparece en la serie. Si alguna serie no se encuentra, la función tira error.
 #' @param actualizar_cada valor numérico que define cada cuantos días se actualiza el archivo
-#' con la información de la base de datos.
+#' con la información de la base de datos (no usado)
 #'
 #'
 #' @return
